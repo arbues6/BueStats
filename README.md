@@ -17,10 +17,19 @@ BueStats is a non-lucrative Python-based project out of the scope of my PhD, and
 ### 1.a. ChromeDriver
 BueStats does not only compute advanced basketball metrics, but it is also a web scraper that gets information from the HTML code of FEB websites (in a cool and legal way, of course). However, FEB's website is not that easy to scrap, given that there are dropdown menus that have to be changed, but these actions do not modify the general website link; for this reason, a remote browser controller has to be installed: [Chromedriver](https://chromedriver.chromium.org/). It is vital to install a Chromedriver version that matches your Google Chrome browser version, which can be find in Settings, and clicking About Chrome. Once installed, make sure that the downloaded chromedriver exectuable file is placed in the main BueStats folder. 
 
-
 ### 1.b. Python Dependencies
+As exepected, some Open-Source Python libraries have to be installed as well for a proper running of this program. This dependencies are included in *Requirements.txt* in case you want to build a virutal environment; otherwise, these libraries can be easily installed with pip: 
+```
+pip3 install numpy
+pip3 install selenium
+pip3 install lxml
+pip3 install pandas
+pip3 install requests
+pip3 install bs4
+```
 
 ## 2. Interface
+
 
 ## 3. Output
 
