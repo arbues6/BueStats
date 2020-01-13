@@ -29,7 +29,7 @@ pip3 install bs4
 ```
 
 ## 2. Interface
-BueStats has a simple straight-forward interface as seen in the following screenshot: 
+BueStats has a simple straight-forward interface (Stats_GUI) as seen in the following screenshot: 
 ![alt text](BueStats_Interface.png)
 - **1. Team / Equipo:** target team you want to scout or analyze. The name of the team must be a **single unique word** with no spaces belonging the the team original name; this is, the name of the team according to FEB. In the given example, Melilla's data will be extracted; note that Melilla is a unique team name, whereas "Baloncesto" or "Club" would not be. 
 - **2. Season / Temporada:** season you want to scout; in this case, 2018 indicates the 2018-2019 season (2019 would indicate 2019-2020 and so on). 
@@ -50,11 +50,31 @@ BueStats has a simple straight-forward interface as seen in the following screen
 - **Extract Rankings / Extraer Rankings** is a checkbox that (when checked) extracts sorted rankings of the given team for each particular stat. This checkbox is related with the Textbox of **Minimum Games / Minimo Partidos** (optional), which can be set in order to set a threshold to include (or not to include) players in the rankings according to the games they have played; if the box is empty, this threshold is automatically set to half the number of games. 
 - **Configuration Folder / Carpeta Configuración** (optional) will be explained in Section 4 (Configuration Files).
 - **Output Folder / Carpeta Destino** is the folder where the output files will be stored. By default, it is a folder called "Reports" in the same "BueStats" main folder (you might create it for simplicity). 
-- **Extract Statistics / Extraer Estadísticas** is the main button to start gathering data from FEB. 
 - **Change Language / Cambiar Idioma** obviously switches languages between Spanish and English, but not only the interface will be affected, but also the output result. 
 - **Load Configuration / Cargar Configuración** will be also explained in Section 4 (Configuration Files).
 
+Finally...
+**Extract Statistics / Extraer Estadísticas** is the main button to start gathering data from FEB. Once you press this button, you just have to be a little patient; Chromedriver will keep popping up and closing FEB sites automatically while extracting information. **Don't interact with these windows**, but you can keep using your computer as usual.  
+
+### Scouting the whole league! 
+A "hidden" feature of BueStats (useful for scouts) is that not only teams and players can be analyzed, but also the entire league! For doing so, you just have to change the text in **1. Team / Equipo:** for *LIGA*. Again, the names of players can be filtered as well. Please note that it might take a while to generate the outputs since there's much more information. 
+
 ## 3. Output
+
+BueStats produces quite a bunch of outputs in a .csv format, don't be overwhelmed because of that! The main reason for generating different statistic files is that the criteria to handle data changes among coaches and analysts, so there is not a best nor established way to do it! For a better visualization of the results, I would strongly suggest to mix the output files as you desire in a Google Spreadsheet file (by importing data), using different sheets and fixing the first row and the first two columns.  <br/>
+<br/>
+All those files starting with a letter *p* belong to *Player* stats, whilst files starting with letters *t* and *r* correspond to *Team* and *Ranking* files. 
+- **Player Level**:
+  - The file that does NOT end with *Phases.csv* or *Rounds.csv* contains all player stats depending on several game-conditioning factors, such as Home / Away, Won / Lost, Initial-5 / Bench, Easy / Tough, Last3 games, and even the performance of the player against the desired teams included in Top/Bottom teams. 
+  - The file that ends with *Phases.csv* contains the player stats clustered into the N-game groups indicated in **8. Intervals**.
+  - The file that ends with *Rounds.csv* contains the performance of the player in each round of the season. 
+  - Rankings (file that starts with *r*) includes the sorting of players from better to worst. <br/>
+
+Apart from the game conditioning factors, the following advanced statistics are included: AST%. eFG%, TS%, GScored, Possessions, Floor Percentage, Points per Shot, %REB, %DRB, %ORB, STL%, Touches, Versatility, Usage, Win Scores, OER, DER, Net Points.  
+  
+- **Team Level**
+
+
 
 ## 4. Configuration Files
 
