@@ -49,33 +49,49 @@ BueStats has a simple straight-forward interface (Stats_GUI) as seen in the foll
 - **Extract Team Stats / Extraer Estadísticas de Equipo** is a checkbox that (when checked) extracts statistics not only at a player-level but also at a team-level. 
 - **Extract Rankings / Extraer Rankings** is a checkbox that (when checked) extracts sorted rankings of the given team for each particular stat. This checkbox is related with the Textbox of **Minimum Games / Minimo Partidos** (optional), which can be set in order to set a threshold to include (or not to include) players in the rankings according to the games they have played; if the box is empty, this threshold is automatically set to half the number of games. 
 - **Configuration Folder / Carpeta Configuración** (optional) will be explained in Section 4 (Configuration Files).
-- **Output Folder / Carpeta Destino** is the folder where the output files will be stored. By default, it is a folder called "Reports" in the same "BueStats" main folder (you might create it for simplicity). 
-- **Change Language / Cambiar Idioma** obviously switches languages between Spanish and English, but not only the interface will be affected, but also the output result. 
+- **Output Folder / Carpeta Destino** is the path where the output files will be stored. By default, it is a folder called "Reports" in the same "BueStats" main folder (you might create it for simplicity). 
+- **Change Language / Cambiar Idioma** switches languages between Spanish and English; not only the interface will be affected, but also the output result. 
 - **Load Configuration / Cargar Configuración** will be also explained in Section 4 (Configuration Files).
 
 Finally...
 **Extract Statistics / Extraer Estadísticas** is the main button to start gathering data from FEB. Once you press this button, you just have to be a little patient; Chromedriver will keep popping up and closing FEB sites automatically while extracting information. **Don't interact with these windows**, but you can keep using your computer as usual.  
 
 ### Scouting the whole league! 
-A "hidden" feature of BueStats (useful for scouts) is that not only teams and players can be analyzed, but also the entire league! For doing so, you just have to change the text in **1. Team / Equipo:** for *LIGA*. Again, the names of players can be filtered as well. Please note that it might take a while to generate the outputs since there's much more information. 
+A "hidden" feature of BueStats (useful for scouts) is that not only teams and players can be analyzed, but also the entire league! For doing so, you just have to change the text in team for *LIGA* (in the given example, Melilla should be substituted by LIGA). Again, the names of players can be filtered as well. Please note that it might take a while to generate the outputs since there's much more information. 
 
 ## 3. Output
 
 BueStats produces quite a bunch of outputs in a .csv format, don't be overwhelmed because of that! The main reason for generating different statistic files is that the criteria to handle data changes among coaches and analysts, so there is not a best nor established way to do it! For a better visualization of the results, I would strongly suggest to mix the output files as you desire in a Google Spreadsheet file (by importing data), using different sheets and fixing the first row and the first two columns.  <br/>
 <br/>
 All those files starting with a letter *p* belong to *Player* stats, whilst files starting with letters *t* and *r* correspond to *Team* and *Ranking* files. 
-- **Player Level**:
-  - The file that does NOT end with *Phases.csv* or *Rounds.csv* contains all player stats depending on several game-conditioning factors, such as Home / Away, Won / Lost, Initial-5 / Bench, Easy / Tough, Last3 games, and even the performance of the player against the desired teams included in Top/Bottom teams. 
-  - The file that ends with *Phases.csv* contains the player stats clustered into the N-game groups indicated in **8. Intervals**.
-  - The file that ends with *Rounds.csv* contains the performance of the player in each round of the season. 
+  - The files that does NOT end with *Phases.csv* or *Rounds.csv* contain all player/team stats depending on several game-conditioning factors, such as Home / Away, Won / Lost, Initial-5 / Bench, Easy / Tough, Last3 games, and even the performance of the player against the desired teams included in Top/Bottom teams. 
+  - The files that end with *Phases.csv* contain the player/team stats clustered into the N-game groups indicated in the above-mentioned intervals.
+  - The files that end with *Rounds.csv* contain the performance of the player/team in each round of the season. 
   - Rankings (file that starts with *r*) includes the sorting of players from better to worst. <br/>
 
-Apart from the game conditioning factors, the following advanced statistics are included: AST%. eFG%, TS%, GScored, Possessions, Floor Percentage, Points per Shot, %REB, %DRB, %ORB, STL%, Touches, Versatility, Usage, Win Scores, OER, DER, Net Points.  
+Apart from the game conditioning factors, the following advanced statistics are included: <br/> 
+- **Player Level**: playerAST%. eFG%, TS%, GScored, Possessions, Floor Percentage, Points per Shot, %REB, %DRB, %ORB, STL%, Touches, Versatility, Usage, Win Scores, OER, DER, Net Points.  
+- **Team Level**: Pace, OER, DER, eFG%, TS%,Play%, FTR%, %DRB, %ORB, %ASST, %TOV.  
   
-- **Team Level**
-
-
 
 ## 4. Configuration Files
+The amount of filters and text boxes of BueStats is not small, and since the whole purpose of building this program is to automatize processes, configuration files might be used in order to save time. This files are simple .txt files (such as the ones included, i.e. *ValoresDefectoORO.txt*), where you can set a default configuration and load it in the interface with a simple click; this feature might be useful for coaches that want to analyze their own team every single week. As it can observe, the text template follows this pattern:
+```
+team=UNICAJA
+season=2018
+division=EBA,DA
+firstRound=1
+lastRound=18
+topTeams=MONTETUCCI,FRAMASA,JAEN
+botTeams=NOVASCHOOL,MARBELLA,INTERIOR
+intervals=7
+players=
+outputFolder=/mnt/DATA/FCBScrapping/Reports
+```
+By clicking the *Load Configuration* button (and making sure the *Configuration Folder* is properly set), the information in the text file is loaded. 
 
 
+
+## 5. Contact
+You can reach me by email (adria.arbues@upf.edu) or by Twitter (@arbues6), and any suggestion or doubt will be kindly addressed! However, I have a thesis to finish in less than 2 years, so I won't have the chance of adding brand new features quickly. Please cite this website if you use the output data for your reports. <br/>
+Executable files for Mac, Windows, and Linux are about to come together with some tutorials, stay tuned!
