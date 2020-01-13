@@ -1,0 +1,10 @@
+equipo=MELILLA
+temporada=2018
+division=ORO
+jornadaIn=1
+jornadaFin=32
+equiposTOP=BETIS,BILBAO,PALMA
+equiposDESC=ARABERRI,LASSA,PRAT
+fases=7
+jugadores=Franch,Vucetic
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports

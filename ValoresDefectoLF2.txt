@@ -1,0 +1,10 @@
+equipo=SEGLE
+temporada=2018
+division=LF2,A
+jornadaIn=1
+jornadaFin=26
+equiposTOP=CORTEGADA,ZORKA,BOET
+equiposDESC=RIOJA,BARCELONA,MARISTAS
+fases=7
+jugadores=
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports

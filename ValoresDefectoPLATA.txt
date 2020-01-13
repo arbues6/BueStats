@@ -1,0 +1,10 @@
+equipo=BARÇA
+temporada=2019
+division=PLATA,ESTE
+jornadaIn=1
+jornadaFin=7
+equiposTOP=GIRONA,PRAT,MURCIA
+equiposDESC=BENICARLO,RODA,PARDINYES
+fases=5
+jugadores=
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports

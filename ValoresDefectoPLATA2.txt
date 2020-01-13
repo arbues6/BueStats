@@ -1,0 +1,11 @@
+equipo=GIRONA
+temporada=2018
+division=PLATA,ESTE,A1
+jornadaIn=1
+jornadaFin=22
+equiposTOP=ALICANTE,VILLARROBLEDO,ALMANSA
+equiposDESC=JURAISTI,ESTELA,AZUQUECA
+fases=5
+jugadores=
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports
+

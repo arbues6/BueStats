@@ -1,0 +1,10 @@
+equipo=UNICAJA
+temporada=2018
+division=EBA,DA
+jornadaIn=1
+jornadaFin=18
+equiposTOP=MONTETUCCI,FRAMASA,JAEN
+equiposDESC=NOVASCHOOL,MARBELLA,INTERIOR
+fases=7
+jugadores=
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports

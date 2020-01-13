@@ -1,0 +1,10 @@
+equipo=VALENCIA
+temporada=2018
+division=DIA
+jornadaIn=1
+jornadaFin=26
+equiposTOP=GIRONA,GIPUZKOA,ARASKI
+equiposDESC=SEU,QUESOS,FERROL
+fases=7
+jugadores=
+carpetaInformes=/mnt/DATA/FCBScrapping/Reports
