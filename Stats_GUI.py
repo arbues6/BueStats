@@ -293,7 +293,7 @@ class Application(Frame):
             self.chRankLabel['text'] = "Extract Player Rankings:"
             self.minPartidosLabel['text'] = "Minimum Games:"
             self.confLabel['text'] = "Configuration Folder:"
-            self.folderLabel['text'] = 'Configuration File:'
+            self.folderLabel['text'] = 'Output Folder:'
             self.button_conf.configure(text="Load Configuration")
             self.button_compare.configure(text="Extract Statistics")
             self.changeLang.configure(text="Cambiar Idioma")
