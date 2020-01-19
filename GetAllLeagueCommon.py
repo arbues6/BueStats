@@ -44,7 +44,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         driver = webdriver.Chrome(sChrome)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
-        if system == 'Linux' or system == 'Windows':
+        if system == 'Linux' or system == 'Darwin':
             for listPhase in range(0, len(select.options)):
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
