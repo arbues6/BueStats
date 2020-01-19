@@ -47,7 +47,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
     if system == 'Linux':
         iBenIn = 2
         iEndIn = -2
-    elif system == 'Darwin':
+    elif system == 'Darwin' or system == 'Windows':
         iBenIn = 0
         iEndIn = 0
 
