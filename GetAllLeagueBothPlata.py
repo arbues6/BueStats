@@ -157,7 +157,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
     jornadas = soup.find_all('div', class_="contentTablaDataGrid")
     firstJornada = jornadas[0].text.split('/')[0]
 
-    if system == 'Linux' or system == 'Windows':
+    if system == 'Linux':
         iBenIn = 2
         iEndIn = -2
     elif system == 'Darwin':
@@ -168,7 +168,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
         driver = webdriver.Chrome(sChrome)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
-        if system == 'Linux' or system == 'Windows':
+        if system == 'Linux':
             for listPhase in range(0, len(select.options)):
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
@@ -351,7 +351,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                     resLoc.append(resLocIn)
                     resVis.append(resVisIn)
                     try:
-                        if system == 'Linux' or system == 'Windows':
+                        if system == 'Linux':
                             candLocTeam = locTeam[2:-1]
                         else:
                             candLocTeam = locTeam
@@ -405,19 +405,18 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                             sLocal.append(locTeam)
                             sAway.append(visTeam)
 
-                            jorTot += 1
-                            if jorTot > jorLast and bLast == True:
+                            if ((jorFirst-1)+jorTot) > (jorLast-3):
                                 statsLast3.append(statsAppend)
                                 statsLast3.append(teamStats)
                                 statsLast3.append(teamStatsAgainst)
 
-                            if system == 'Linux' or system == 'Windows':
+                            if system == 'Linux':
                                 candLocTeam = locTeam[2:-1]
                             else:
                                 candLocTeam = locTeam
 
                             if targetTeam in candLocTeam:
-                                if system == 'Linux' or system == 'Windows':
+                                if system == 'Linux':
                                     candVisTeam = visTeam[2:-1]
                                 else:
                                     candVisTeam = visTeam
@@ -435,7 +434,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                                         statsBot.append(teamStats)
                                         statsBot.append(teamStatsAgainst)
                             else:
-                                if system == 'Linux' or system == 'Windows':
+                                if system == 'Linux':
                                     candLocTeam = locTeam[2:-1]
                                 else:
                                     candLocTeam = locTeam
@@ -550,7 +549,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         driver = webdriver.Chrome(sChrome)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
-        if system == 'Linux' or system == 'Windows':
+        if system == 'Linux':
             for listPhase in range(0, len(select.options)):
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
