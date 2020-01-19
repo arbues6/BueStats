@@ -472,7 +472,7 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                 opp3PM = float(np.sum(np.array(opp3PMv)))
                 oppAssis = float(np.sum(np.array(oppAssisv)))
 
-                if platform == 'Linux' or platform == 'Windows':
+                if platform == 'Linux' or platform == 'Darwin':
                     for iTeamAux in range(0, len(teamStatsM)):
                         if str(teamStatsM[iTeamAux][0])[5:-7] == str(targetTeam)[2:-1]:
                             posTeam = iTeamAux
@@ -896,9 +896,9 @@ def get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, iFase, targetT
         # if iPlayer == 0:
         flat_avStatsTotAg[iPlayer][0] = [flat_avStatsTotAg[iPlayer][0]]
 
-    stats2csvFase(flat_avStatsTot, (sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + '.csv').replace('\\\\','/'), sLang)
+    stats2csvFase(flat_avStatsTot, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + '.csv', sLang)
     if bTeam:
-        stats2csvFaseTeamAllExtend(flat_avStatsTotT, flat_avStatsTotAg, (sDir + '/t'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + '.csv').replace('\\\\','/'),sLang)
+        stats2csvFaseTeamAllExtend(flat_avStatsTotT, flat_avStatsTotAg, sDir + '/t'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + '.csv',sLang)
 
 
 def stats2csvFase(avStats,csvFile, sLang):
@@ -976,41 +976,6 @@ def stats2csvFaseTeamAllExtend(avStatsT,avStatsAg,csvFile, sLang):
     #df.sort_values(['Nombre'], inplace=True)
     df.to_csv(csvFile, index=False)
 
-# def stats2csvFaseTeamAll(avStatsT,avStatsAg,csvFile, sLang):
-#     #avStatsT.extend(avStatsAg)
-#     if sLang == 'Castellano':
-#         headers = ['Nombre', 'Jornada', 'Partidos', 'Minutos', 'Puntos', 'T2 Anotados', 'T2 Lanzados', '% T2', 'T3 Anotados', 'T3 Lanzados', '% T3', 'T1 Anotados', 'T1 Lanzados', '% T1', 'Reb. Ofensivos', 'Reb. Defensivos', 'Rebotes', 'Asistencias', 'Robos', 'Perdidas', 'Tapones', 'Tapones Recibidos', 'Mates', 'Faltas Cometidas', 'Faltas Recibidas', 'Valoracion', 'Local', 'Visitante', 'Victoria', 'Diferencia']
-#     else:
-#         headers = ['Name', 'Round', 'Team', 'Minutes', 'Points', '2PM', '2PA', '% 2P', '3PM', '3Pa', '% 3P', 'FTM', 'FTA', '% T1', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'TOV', 'BLK', 'BLKr', 'Dunks', 'PF', 'PFr', 'PIR', 'Home', 'Away', 'Win', 'Difference']
-#
-#     avStatsArr = np.array(avStatsT)
-#     avStatsArr = np.array([np.array(l) for l in avStatsArr])
-#     avStatsArr1 = avStatsArr[:,:26]
-#     avStatsArr2 = avStatsArr[:,-4:]
-#     avStatsArr = np.concatenate((avStatsArr1, avStatsArr2),axis=1)
-#     avStatsT = list(avStatsArr)
-#     avStatsT = [l.tolist() for l in avStatsT]
-#
-#     if sLang == 'Castellano':
-#         sCon1 = 'Nombre'
-#         sCon2 = 'Jornada'
-#     else:
-#         sCon1 = 'Name'
-#         sCon2 = 'Round'
-#
-#     df = DataFrame(avStatsT, columns=headers)
-#     df.sort_values([sCon1], inplace=True)
-#     df.sort_values([sCon2], inplace=True)
-#
-#     df[sCon1] = df[sCon1].str[0]
-#     df[sCon2] = df[sCon2].str[0]
-#
-#     for iStat in range(2,int(len(headers)-4)):
-#         substBrackets(df,headers[iStat])
-#     df.sort_values([sCon1, sCon2], inplace=True)
-#     #df.sort_values(['Nombre'], inplace=True)
-#     df.to_csv(csvFile, index=False)
-
 def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, strFase, bTeam, bProj, teamNames, sMinGames, sLang):
     players = []
     avStats = []
@@ -1060,12 +1025,12 @@ def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, str
         tryAppend(teamStatsAg, te)
 
     avStatsArr = np.copy(np.array(avStats))
-    stats2csvLeague(avStats, (sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv').replace('\\\\','/'), sLang)
+    stats2csvLeague(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
     if bTeam:
-        stats2csvFaseTeam(teamStats, teamStatsAg, (sDir + '/t'+targetTeam+season+ 'J' + str(jorFirst) + 'J' + str(jorLast) +  strFase + '.csv').replace('\\\\','/'), False, sLang)
+        stats2csvFaseTeam(teamStats, teamStatsAg, sDir + '/t'+targetTeam+season+ 'J' + str(jorFirst) + 'J' + str(jorLast) +  strFase + '.csv', False, sLang)
 
     namesArr = np.array(avStatsArr[:, 0])
-    if platform == 'Linux' or platform == 'Windows':
+    if platform == 'Linux' or platform == 'Darwin':
         namesArr = np.array([str(x)[5:-4] for x in namesArr])
     else:
         namesArr = np.array([str(str(x[0][1:-1])) for x in namesArr])
@@ -1089,5 +1054,5 @@ def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, str
         sortedVal = statArr[inds]
         topStats.append(sortedVal)
 
-    ranking2csv(topStats, (sDir + '/pRankings'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv').replace('\\\\','/'), sLang)
+    ranking2csv(topStats, sDir + '/pRankings'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
 
