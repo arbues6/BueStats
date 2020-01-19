@@ -1,13 +1,11 @@
 # encoding: utf-8
 from tkinter import *
+from tkinter import ttk
 import GetAllGamesCommon
 import GetAllLeagueCommon
 import GetAllLeagueBothPlata
 import unicodedata
-try:
-    from importlib import reload
-except:
-    pass
+from importlib import reload
 import os
 import platform
 
@@ -50,7 +48,7 @@ class Application(Frame):
         self.chRankLabel = Label(self)
         self.checkRank = IntVar(value=1)
         self.language = StringVar(value="Castellano")
-        self.Options = ["Castellano","English"]
+        #self.Options = ["Castellano", "English"]
         self.create_widgets()
 
     def create_widgets(self):
@@ -151,58 +149,49 @@ class Application(Frame):
     def create_boxTeam_widget(self):
         self.chEquipoLabel['text'] = "Extraer Estadisticas de Equipo:"
         self.chEquipoLabel.grid(row=12, column=0, sticky=W)
-        self.checkButtonTeam = Checkbutton()
-        self.checkButtonTeam.configure(width=12, var=self.checkEquipo,height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonTeam = ttk.Checkbutton()
+        #self.checkButtonTeam.configure(width=12, var=self.checkEquipo,height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonTeam.configure(width=2, var=self.checkEquipo)
         self.checkButtonTeam.grid(row=12, column=0, columnspan=1, sticky=W)
-        if system == 'Windows':
-            self.checkButtonTeam.place(x=286, y=215)
-        else:
-            self.checkButtonTeam.place(x=300, y=245)
+        self.checkButtonTeam.place(x=305, y = 245)
 
     def create_boxGames_widget(self):
         self.chAllLabel['text'] = "Extraer Todas las Jornadas:"
         self.chAllLabel.grid(row=11, column=0, sticky=W)
-        self.checkButtonGames = Checkbutton()
-        self.checkButtonGames.configure(width=12, var=self.checkAll,height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonGames = ttk.Checkbutton()
+        #self.checkButtonGames.configure(width=12, var=self.checkAll,height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonGames.configure(width=2, var=self.checkAll)
         # self.checkButtonGames.grid(row=11, column=0, columnspan=1, sticky=W)
-        if system == 'Windows':
-            self.checkButtonGames.place(x=286, y=196)
-        else:
-            self.checkButtonGames.place(x=300, y=225)
+        self.checkButtonGames.place(x=305, y = 225)
 
     def create_proj_widget(self):
         Label(self, text="Extraer Proyecciones:").grid(row=13, column=0, sticky=W)
-        self.checkButtonProj = Checkbutton()
-        self.checkButtonProj.configure(width=12, var=self.checkProj, height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonProj = ttk.Checkbutton()
+        #self.checkButtonProj.configure(width=12, var=self.checkProj, height=1, relief=RIDGE, borderwidth=2)
+        self.checkButtonProj.configure(width=2, var=self.checkProj)
         self.checkButtonProj.grid(row=11, column=0, columnspan=1, sticky=W)
-        self.checkButtonProj.place(x=300, y=265)
+        self.checkButtonProj.place(x=305, y=265)
 
     def create_rank_widget(self):
         self.chRankLabel['text'] = "Extraer Rankings:"
         self.chRankLabel.grid(row=13, column=0, sticky=W)
-        self.checkButtonRank = Checkbutton()
-        if system == 'Linux' or system == 'Windows':
-            self.checkButtonRank.configure(width=12, var=self.checkRank, height=1, relief=RIDGE, borderwidth=2)
-        else:
-            self.checkButtonRank.configure(width=2, var=self.checkRank, height=1, relief=RIDGE, borderwidth=2)
-        self.checkButtonRank.grid(row=13, column=0, sticky=W)
-        if system == 'Windows':
-            self.checkButtonRank.place(x=286, y=236)
-        else:
-            self.checkButtonRank.place(x=300, y=265)
-
-        self.minPartidosLabel['text'] = "Minimo Partidos:"
+        self.checkButtonRank = ttk.Checkbutton()
         if system == 'Linux':
+            #self.checkButtonRank.configure(width=12, var=self.checkRank, height=1, relief=RIDGE, borderwidth=2)
+            self.checkButtonRank.configure(width=12, var=self.checkRank)
+        else:
+            #self.checkButtonRank.configure(width=2, var=self.checkRank, height=1, relief=RIDGE, borderwidth=2)
+            self.checkButtonRank.configure(width=2, var=self.checkRank)
+        self.checkButtonRank.grid(row=13, column=0, sticky=W)
+        self.checkButtonRank.place(x=305, y=265)
+        if system == 'Linux':
+            self.minPartidosLabel['text'] = "Minimo Partidos:"
             self.minPartidosLabel.place(x=350, y=267)
             self.text_minPartidos = Text(self, width=15, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
             self.text_minPartidos.place(x=460, y=265)
             self.text_minPartidos.insert(END, "")
-        elif system == 'Windows':
-            self.minPartidosLabel.place(x=350, y=236)
-            self.text_minPartidos = Text(self, width=15, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
-            self.text_minPartidos.place(x=460, y=236)
-            self.text_minPartidos.insert(END, "")
         else:
+            self.minPartidosLabel['text'] = "Minimo Partidos:"
             self.minPartidosLabel.place(x=300, y=265)
             #Label(self, text="Minimo Partidos:").place(x=300, y=265)
             self.text_minPartidos = Text(self, width=15, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
@@ -210,7 +199,7 @@ class Application(Frame):
             self.text_minPartidos.insert(END, "")
 
     def create_export_widget(self):
-        self.button_compare = Button()
+        self.button_compare = ttk.Button()
         self.button_compare.configure(text="Extraer Estadisticas")
         self.button_compare.grid(row=18, column=1, sticky=W)
         self.button_compare["command"] = self.save_stats
@@ -218,10 +207,10 @@ class Application(Frame):
         # self.button_compare.place(x = 100, y = 320)
 
     def create_conf_button(self):
-        self.button_conf = Button()
+        self.button_conf = ttk.Button()
         self.button_conf.configure(text="Cargar Configuracion")
         self.button_conf.grid()
-        if system == 'Linux' or system == 'Windows':
+        if system == 'Linux':
             self.button_conf.place(x=80, y=405)
         else:
             self.button_conf.place(x=110, y=400)
@@ -245,18 +234,23 @@ class Application(Frame):
         # self.text_folder.configure(state="disabled")
 
     def create_language_widget(self):
-        self.language_drop = OptionMenu(self,self.language,*self.Options).grid(row=24, column=0, sticky=W)
-        # self.language_drop.pack()
-        self.changeLang = Button()
+        # self.language_drop = ttk.OptionMenu(self,self.language,*self.Options).grid(row=24, column=0, sticky=W)
+        # # self.language_drop.pack()
+        self.changeLang = ttk.Button()
         self.changeLang.configure(text="Change Language")
         self.changeLang.grid()
-        if system == 'Linux' or system == 'Windows':
+        if system == 'Linux':
             self.changeLang.place(x=80, y=375)
         else:
             self.changeLang.place(x=112, y=365)
         self.changeLang["command"] = self.change_language
 
     def change_language(self):
+        if self.language.get() == "Castellano":
+            self.language = StringVar(value="English")
+        else:
+            self.language = StringVar(value="Castellano")
+
         if self.language.get() == "Castellano":
             #self.create_labels_cast()
             self.TeamLabel['text'] = '1. Equipo:'
@@ -299,7 +293,7 @@ class Application(Frame):
             self.changeLang.configure(text="Cambiar Idioma")
 
     def load_conf(self):
-        f = open(str(unicodedata.normalize('NFKD', self.text_conf.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '').replace('\\\\','/')[2:-3], "r")
+        f = open(str(unicodedata.normalize('NFKD', self.text_conf.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '')[2:-3], "r")
         text = f.read()
         parts = text.split('\n')[:-1]
         for part in range(0, len(parts)):
@@ -362,12 +356,8 @@ class Application(Frame):
         else:
             bProj = False
 
-        if system == 'Linux' or 'Windows':
-            iBenIn = 2
-            iEndIn = -3
-        elif system == 'Darwin':
-            iBenIn = 0
-            iEndIn = 0
+        iBenIn = 2
+        iEndIn = -3
 
         if iEndIn != 0:
             season = str(unicodedata.normalize('NFKD', self.text_season.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '')[iBenIn:iEndIn]
@@ -473,12 +463,14 @@ class Application(Frame):
                 elif divSplit == 'PLATA':
                     if bUnaFase == False:
                         GetAllLeagueBothPlata.extractStatisticsPlata(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], division.split(',')[2], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                        reload(GetAllLeagueBothPlata)
                     else:
                         GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang)
                 elif divSplit == 'EBA':
                     GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
                 elif divSplit == 'LF2':
                     GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+
             reload(GetAllGamesCommon)
 
 #if __name__ == '__main__':
