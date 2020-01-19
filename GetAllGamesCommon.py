@@ -55,13 +55,14 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
         driver = webdriver.Chrome(sChrome)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
-        if system == 'Linux':
+
+        if system == 'Linux' or system == 'Darwin':
             for listPhase in range(0, len(select.options)):
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
         else:
             for listPhase in range(0, len(select.options)):
-                if str(division.encode('ascii', 'ignore')).upper() in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '').split(' '):
+                if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
 
         time.sleep(5)
@@ -226,7 +227,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                     resLoc.append(resLocIn)
                     resVis.append(resVisIn)
                     try:
-                        if system == 'Linux':
+                        if system == 'Linux' or system == 'Darwin':
                             candLocTeam = locTeam[2:-1]
                         else:
                             candLocTeam = locTeam
@@ -285,13 +286,13 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                                 statsLast3.append(teamStats)
                                 statsLast3.append(teamStatsAgainst)
 
-                            if system == 'Linux':
+                            if system == 'Linux' or system == 'Darwin':
                                 candLocTeam = locTeam[2:-1]
                             else:
                                 candLocTeam = locTeam
 
                             if targetTeam in candLocTeam:
-                                if system == 'Linux':
+                                if system == 'Linux' or system == 'Darwin':
                                     candVisTeam = visTeam[2:-1]
                                 else:
                                     candVisTeam = visTeam
@@ -309,7 +310,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                                         statsBot.append(teamStats)
                                         statsBot.append(teamStatsAgainst)
                             else:
-                                if system == 'Linux':
+                                if system == 'Linux' or system == 'Darwin':
                                     candLocTeam = locTeam[2:-1]
                                 else:
                                     candLocTeam = locTeam
