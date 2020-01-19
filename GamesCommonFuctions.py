@@ -307,7 +307,7 @@ def computeAdvStats(statsPlayers, avStats, teamStats=None, teamStatsAg=None):
         game = 0
         for gameAux in range(0, int(len(statsPlayers)/3)):
             namesGame = statsPlayers[game][0]
-            if platform.system() == 'Linux' or platform.system() == 'Windows':
+            if platform.system() == 'Linux' or platform.system() == 'Darwin':
                 namesGame = ['\n' +  str(x.encode('ascii', errors='ignore'))[4:-3] +'\n' for x in namesGame]
                 if '\n' + str(name[0])[4:-3] + '\n' in namesGame:
                     bPlayed.append(gameAux)
@@ -872,14 +872,14 @@ def get5FasesStats(sLang, statsPlayers, season, jorFirst, jorLast, sDir, iFase, 
     for iPlayer in range(0, len(flat_avStatsTotAg)):
         tryAppend(flat_avStatsTotAg, iPlayer)
 
-    stats2csvFase(flat_avStatsTot, (sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sSave + '.csv').replace('\\\\','/'), bAddition, sLang)
+    stats2csvFase(flat_avStatsTot, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sSave + '.csv', bAddition, sLang)
     if bTeam:
-        stats2csvFaseTeam(flat_avStatsTotT, flat_avStatsTotAg, (sDir + '/t'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sSave + '.csv').replace('\\\\','/'), bAddition, sLang)
+        stats2csvFaseTeam(flat_avStatsTotT, flat_avStatsTotAg, sDir + '/t'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sSave + '.csv', bAddition, sLang)
 
     if bProj == True:
         for iPlayer in range(0, len(flat_avStatsTot)):
             tryAppendProj(flat_avStatsTot, iPlayer)
-        stats2csvFase(flat_avStatsTot, (sDir + '/p' + targetTeam + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + 'PeriodosProj.csv').replace('\\\\','/'), bAddition)
+        stats2csvFase(flat_avStatsTot, sDir + '/p' + targetTeam + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + sFase + 'PeriodosProj.csv', bAddition)
 
 
 def stats2csvFase(avStats,csvFile, bAddition, sLang):
@@ -1394,9 +1394,9 @@ def getAvStats(statsPlayers, bHome, tipusPartit, bAgainst, bAgainst2, targetTeam
         tryAppend(teamTarget2StatsAg, 0)
 
     avStatsArr = np.copy(np.array(avStats))
-    stats2csv(avStats, last3Stats, homeStats, awayStats, titStats, benchStats, winStats, lostStats, easyStats, toughStats, target1Stats, target2Stats, str(sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv').replace('\\\\','/'), sLang)
+    stats2csv(avStats, last3Stats, homeStats, awayStats, titStats, benchStats, winStats, lostStats, easyStats, toughStats, target1Stats, target2Stats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
     if bTeam:
-        stats2csvTeam(teamStats, teamLast3Stats, teamHomeStats, teamAwayStats, teamWinStats, teamLostStats, teamEasyStats, teamToughStats, teamTarget1Stats, teamTarget2Stats, teamStatsAg, teamLast3StatsAg, teamHomeStatsAg, teamAwayStatsAg, teamWinStatsAg, teamLostStatsAg, teamEasyStatsAg, teamToughStatsAg, teamTarget1StatsAg, teamTarget2StatsAg, (sDir + '/t'+targetTeam+season+ 'J' + str(jorFirst) + 'J' + str(jorLast) +  strFase + '.csv').replace('\\\\','/'), sLang)
+        stats2csvTeam(teamStats, teamLast3Stats, teamHomeStats, teamAwayStats, teamWinStats, teamLostStats, teamEasyStats, teamToughStats, teamTarget1Stats, teamTarget2Stats, teamStatsAg, teamLast3StatsAg, teamHomeStatsAg, teamAwayStatsAg, teamWinStatsAg, teamLostStatsAg, teamEasyStatsAg, teamToughStatsAg, teamTarget1StatsAg, teamTarget2StatsAg, sDir + '/t'+targetTeam+season+ 'J' + str(jorFirst) + 'J' + str(jorLast) +  strFase + '.csv', sLang)
 
     namesArr = np.array(avStatsArr[:, 0])
     namesArr = np.array([str(x)[4:-4] for x in namesArr])
@@ -1420,7 +1420,7 @@ def getAvStats(statsPlayers, bHome, tipusPartit, bAgainst, bAgainst2, targetTeam
         sortedVal = statArr[inds]
         topStats.append(sortedVal)
 
-    ranking2csv(topStats, (sDir + '/r'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv').replace('\\\\','/'), sLang)
+    ranking2csv(topStats, sDir + '/r'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
 
 def ranking2csv(topStats, csvFile, sLang):
     if sLang == 'Castellano':
