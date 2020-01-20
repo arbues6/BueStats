@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import time
 from pandas import DataFrame
+from selenium.webdriver.chrome.options import Options
 import GamesCommonFunctionsAllLeague as GLC
 import GamesCommonFuctions as GC
 import unicodedata
@@ -18,6 +19,11 @@ sLocal = []
 sAway = []
 sWin = []
 sDif = []
+chrome_options = Options()
+# maximized window
+chrome_options.add_argument("--start-maximized")
+
+
 
 def extractStatisticsPlata(html_doc,targetTeam,againstTeams,againstTeams2,season,jorFirst,jorLast,division1,division2,sDir,fases,sChrome,bAll,bTeam,sPlayers,bProj,sLeague,sOutput, sMinGames, sLang):
     if sLang == "Castellano":
@@ -165,7 +171,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
         iEndIn = 0
 
     if sLeague != 'ORO' and sLeague != 'DIA':
-        driver = webdriver.Chrome(sChrome)
+        driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
         if system == 'Linux' or system == 'Darwin':
@@ -181,7 +187,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
         driver.close()
 
         if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-            driver = webdriver.Chrome(sChrome)
+            driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
             driver.get(html_doc_alt1)
             select = Select(driver.find_element_by_id('gruposDropDownList'))
             select.select_by_visible_text(select.options[iSelect].text)
@@ -191,7 +197,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
             soup = BeautifulSoup(to_soup, 'lxml')
             jornadas = soup.find_all('div', class_="contentTablaDataGrid")
             if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc_alt2)
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
                 select.select_by_visible_text(select.options[iSelect].text)
@@ -241,7 +247,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
         print(sExt + ' (' + str(page-pageIn+1) + '/' + str(pageFin-pageIn+1) + ')')
         if page != 0:
             if sLeague != 'ORO' and sLeague != 'DIA':
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc)
                 driver.delete_all_cookies()
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
@@ -254,7 +260,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                 # select = driver.find_element_by_link_text(str(page + 1)).click()
             else:
                 #print(sChrome) # /Users/arbues/chromedriver
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 # driver = webdriver.PhantomJS()
                 driver.get(html_doc)
                 driver.delete_all_cookies()
@@ -268,7 +274,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
             if firstJornada != jornadasNew[0].text.split('/')[0]:
                 jornadas = jornadasNew
             else:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 if sLeague != 'ORO' and sLeague != 'DIA':
                     driver.get(html_doc_alt1)
                     driver.delete_all_cookies()
@@ -293,7 +299,7 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
                 if firstJornada != jornadasNew[0].text.split('/')[0]:
                     jornadas = jornadasNew
                 else:
-                    driver = webdriver.Chrome(sChrome)
+                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                     if sLeague != 'ORO' and sLeague != 'DIA':
                         driver.get(html_doc_alt2)
                         driver.delete_all_cookies()
@@ -546,7 +552,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         sExtr = 'Extracting Games:'
 
     if sLeague != 'ORO' and sLeague != 'DIA':
-        driver = webdriver.Chrome(sChrome)
+        driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
         if system == 'Linux' or system == 'Darwin':
@@ -561,7 +567,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         driver.close()
 
         if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-            driver = webdriver.Chrome(sChrome)
+            driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
             driver.get(html_doc_alt1)
             select = Select(driver.find_element_by_id('gruposDropDownList'))
             select.select_by_visible_text(select.options[iSelect].text)
@@ -571,7 +577,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             soup = BeautifulSoup(to_soup, 'lxml')
             jornadas = soup.find_all('div', class_="contentTablaDataGrid")
             if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc_alt2)
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
                 select.select_by_visible_text(select.options[iSelect].text)
@@ -602,7 +608,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         print(sExtr + ' (' + str(page-pageIn+1) + '/' + str(pageFin-pageIn+1) + ')')
         if page != 0:
             if sLeague != 'ORO' and sLeague != 'DIA':
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc)
                 driver.delete_all_cookies()
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
@@ -613,7 +619,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 except:
                     pass
             else:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 # driver = webdriver.PhantomJS()
                 driver.get(html_doc)
                 driver.delete_all_cookies()
@@ -627,7 +633,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             if firstJornada != jornadasNew[0].text.split('/')[0]:
                 jornadas = jornadasNew
             else:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 if sLeague != 'ORO' and sLeague != 'DIA':
                     driver.get(html_doc_alt1)
                     driver.delete_all_cookies()
@@ -652,7 +658,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 if firstJornada != jornadasNew[0].text.split('/')[0]:
                     jornadas = jornadasNew
                 else:
-                    driver = webdriver.Chrome(sChrome)
+                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                     if sLeague != 'ORO' and sLeague != 'DIA':
                         driver.get(html_doc_alt2)
                         driver.delete_all_cookies()
