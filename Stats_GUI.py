@@ -153,7 +153,10 @@ class Application(Frame):
         #self.checkButtonTeam.configure(width=12, var=self.checkEquipo,height=1, relief=RIDGE, borderwidth=2)
         self.checkButtonTeam.configure(width=2, var=self.checkEquipo)
         self.checkButtonTeam.grid(row=12, column=0, columnspan=1, sticky=W)
-        self.checkButtonTeam.place(x=305, y = 245)
+        if system == 'Windows':
+            self.checkButtonTeam.place(x=290, y = 220)
+        else:
+            self.checkButtonTeam.place(x=305, y = 245)
 
     def create_boxGames_widget(self):
         self.chAllLabel['text'] = "Extraer Todas las Jornadas:"
@@ -162,7 +165,10 @@ class Application(Frame):
         #self.checkButtonGames.configure(width=12, var=self.checkAll,height=1, relief=RIDGE, borderwidth=2)
         self.checkButtonGames.configure(width=2, var=self.checkAll)
         # self.checkButtonGames.grid(row=11, column=0, columnspan=1, sticky=W)
-        self.checkButtonGames.place(x=305, y = 225)
+        if system == 'Windows':
+            self.checkButtonGames.place(x=290, y = 200)
+        else:
+            self.checkButtonGames.place(x=305, y = 225)
 
     def create_proj_widget(self):
         Label(self, text="Extraer Proyecciones:").grid(row=13, column=0, sticky=W)
@@ -183,12 +189,23 @@ class Application(Frame):
             #self.checkButtonRank.configure(width=2, var=self.checkRank, height=1, relief=RIDGE, borderwidth=2)
             self.checkButtonRank.configure(width=2, var=self.checkRank)
         self.checkButtonRank.grid(row=13, column=0, sticky=W)
-        self.checkButtonRank.place(x=305, y=265)
+        if system == 'Windows':
+            self.checkButtonRank.place(x=290, y=240)
+        else:
+            self.checkButtonRank.place(x=305, y=265)
+
         if system == 'Linux':
             self.minPartidosLabel['text'] = "Minimo Partidos:"
             self.minPartidosLabel.place(x=350, y=267)
             self.text_minPartidos = Text(self, width=15, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
             self.text_minPartidos.place(x=460, y=265)
+            self.text_minPartidos.insert(END, "")
+        elif system == 'Windows':
+            self.minPartidosLabel['text'] = "Minimo Partidos:"
+            self.minPartidosLabel.place(x=300, y=235)
+            # Label(self, text="Minimo Partidos:").place(x=300, y=265)
+            self.text_minPartidos = Text(self, width=15, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
+            self.text_minPartidos.place(x=410, y=235)
             self.text_minPartidos.insert(END, "")
         else:
             self.minPartidosLabel['text'] = "Minimo Partidos:"
