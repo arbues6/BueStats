@@ -5,6 +5,7 @@ import GetStatsGame
 import GetStatsTeam
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
 import time
 from pandas import DataFrame
 import GamesCommonFunctionsAllLeague as GLC
@@ -40,8 +41,13 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
     jornadas = soup.find_all('div', class_="contentTablaDataGrid")
     firstJornada = jornadas[0].text.split('/')[0]
 
+    chrome_options = Options()
+    # maximized window
+    chrome_options.add_argument("--start-maximized")
+
     if sLeague != 'ORO' and sLeague != 'DIA':
-        driver = webdriver.Chrome(sChrome)
+        driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
+        driver.maximize_window()
         driver.get(html_doc)
         select = Select(driver.find_element_by_id('gruposDropDownList'))
         if system == 'Linux' or system == 'Darwin':
@@ -56,7 +62,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         driver.close()
 
         if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-            driver = webdriver.Chrome(sChrome)
+            driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
             driver.get(html_doc_alt1)
             select = Select(driver.find_element_by_id('gruposDropDownList'))
             select.select_by_visible_text(select.options[iSelect].text)
@@ -66,7 +72,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             soup = BeautifulSoup(to_soup, 'lxml')
             jornadas = soup.find_all('div', class_="contentTablaDataGrid")
             if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc_alt2)
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
                 select.select_by_visible_text(select.options[iSelect].text)
@@ -97,7 +103,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         print(sExtr + ' (' + str(page-pageIn+1) + '/' + str(pageFin-pageIn+1) + ')')
         if page != 0:
             if sLeague != 'ORO' and sLeague != 'DIA':
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 driver.get(html_doc)
                 driver.delete_all_cookies()
                 select = Select(driver.find_element_by_id('gruposDropDownList'))
@@ -108,7 +114,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 except:
                     pass
             else:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 # driver = webdriver.PhantomJS()
                 driver.get(html_doc)
                 driver.delete_all_cookies()
@@ -122,7 +128,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             if firstJornada != jornadasNew[0].text.split('/')[0]:
                 jornadas = jornadasNew
             else:
-                driver = webdriver.Chrome(sChrome)
+                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                 if sLeague != 'ORO' and sLeague != 'DIA':
                     driver.get(html_doc_alt1)
                     driver.delete_all_cookies()
@@ -147,7 +153,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 if firstJornada != jornadasNew[0].text.split('/')[0]:
                     jornadas = jornadasNew
                 else:
-                    driver = webdriver.Chrome(sChrome)
+                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
                     if sLeague != 'ORO' and sLeague != 'DIA':
                         driver.get(html_doc_alt2)
                         driver.delete_all_cookies()
