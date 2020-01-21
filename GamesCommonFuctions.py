@@ -317,190 +317,202 @@ def computeAdvStats(statsPlayers, avStats, teamStats=None, teamStatsAg=None):
                     bPlayed.append(gameAux)
 
             game = game + 3
-        if bPlayed != []:
             timePlayed = divmod(avStats[indPl][3][0], 60)
-            iMins = float(str(timePlayed[0]) + '.' + str(float(timePlayed[1])/float(60))[2:])
-            iPts = float(avStats[indPl][4][0])
-            it2M = float(avStats[indPl][5][0])
-            it2A = float(avStats[indPl][6][0])
-            it3M = float(avStats[indPl][8][0])
-            it3A = float(avStats[indPl][9][0])
-            it1M = float(avStats[indPl][11][0])
-            it1A = float(avStats[indPl][12][0])
-            indFGm = it2M + it3M
-            indFGa = it2A + it3A
-            iOfReb = float(avStats[indPl][14][0])
-            iDefReb = float(avStats[indPl][15][0])
-            iAssis = float(avStats[indPl][17][0])
-            iRec = float(avStats[indPl][18][0])
-            iPer = float(avStats[indPl][19][0])
-            iTapF = float(avStats[indPl][20][0])
-            iFal = float(avStats[indPl][23][0])
+            if bPlayed != [] and float(str(timePlayed[0]) + '.' + str(float(timePlayed[1]) / float(60))[2:]) > 0:
+                iMins = float(str(timePlayed[0]) + '.' + str(float(timePlayed[1])/float(60))[2:])
+                iPts = float(avStats[indPl][4][0])
+                it2M = float(avStats[indPl][5][0])
+                it2A = float(avStats[indPl][6][0])
+                it3M = float(avStats[indPl][8][0])
+                it3A = float(avStats[indPl][9][0])
+                it1M = float(avStats[indPl][11][0])
+                it1A = float(avStats[indPl][12][0])
+                indFGm = it2M + it3M
+                indFGa = it2A + it3A
+                iOfReb = float(avStats[indPl][14][0])
+                iDefReb = float(avStats[indPl][15][0])
+                iAssis = float(avStats[indPl][17][0])
+                iRec = float(avStats[indPl][18][0])
+                iPer = float(avStats[indPl][19][0])
+                iTapF = float(avStats[indPl][20][0])
+                iFal = float(avStats[indPl][23][0])
 
-            teamMins = float(np.sum(np.array(teamMinsv)[bPlayed]))
-            teamPts = float(np.sum(np.array(teamPtsv)[bPlayed]))
-            teamFGm = float(np.sum(np.array(teamFGmv)[bPlayed]))
-            teamFGa = float(np.sum(np.array(teamFGav)[bPlayed]))
-            teamFTm = float(np.sum(np.array(teamFTmv)[bPlayed]))
-            teamFTa = float(np.sum(np.array(teamFTav)[bPlayed]))
-            team3Pm = float(np.sum(np.array(team3Pmv)[bPlayed]))
-            teamAssis = float(np.sum(np.array(teamAssisv)[bPlayed]))
-            teamORB = float(np.sum(np.array(teamORBv)[bPlayed]))
-            teamDRB = float(np.sum(np.array(teamDRBv)[bPlayed]))
-            teamRec = float(np.sum(np.array(teamRecv)[bPlayed]))
-            teamPer = float(np.sum(np.array(teamPerv)[bPlayed]))
-            teamTap = float(np.sum(np.array(teamTapv)[bPlayed]))
-            teamFp = float(np.sum(np.array(teamFpv)[bPlayed]))
+                teamMins = float(np.sum(np.array(teamMinsv)[bPlayed]))
+                teamPts = float(np.sum(np.array(teamPtsv)[bPlayed]))
+                teamFGm = float(np.sum(np.array(teamFGmv)[bPlayed]))
+                teamFGa = float(np.sum(np.array(teamFGav)[bPlayed]))
+                teamFTm = float(np.sum(np.array(teamFTmv)[bPlayed]))
+                teamFTa = float(np.sum(np.array(teamFTav)[bPlayed]))
+                team3Pm = float(np.sum(np.array(team3Pmv)[bPlayed]))
+                teamAssis = float(np.sum(np.array(teamAssisv)[bPlayed]))
+                teamORB = float(np.sum(np.array(teamORBv)[bPlayed]))
+                teamDRB = float(np.sum(np.array(teamDRBv)[bPlayed]))
+                teamRec = float(np.sum(np.array(teamRecv)[bPlayed]))
+                teamPer = float(np.sum(np.array(teamPerv)[bPlayed]))
+                teamTap = float(np.sum(np.array(teamTapv)[bPlayed]))
+                teamFp = float(np.sum(np.array(teamFpv)[bPlayed]))
 
-            oppFGM = float(np.sum(np.array(oppFGMv)[bPlayed]))
-            oppFGA = float(np.sum(np.array(oppFGAv)[bPlayed]))
-            oppFTm = float(np.sum(np.array(oppFTmv)[bPlayed]))
-            oppFTa = float(np.sum(np.array(oppFTav)[bPlayed]))
-            oppPoints = float(np.sum(np.array(oppPointsv)[bPlayed]))
-            oppORB = float(np.sum(np.array(oppORBv)[bPlayed]))
-            oppDRB = float(np.sum(np.array(oppDRBv)[bPlayed]))
-            oppPer = float(np.sum(np.array(oppPerv)[bPlayed]))
-            oppFp = float(np.sum(np.array(oppFpv)[bPlayed]))
+                oppFGM = float(np.sum(np.array(oppFGMv)[bPlayed]))
+                oppFGA = float(np.sum(np.array(oppFGAv)[bPlayed]))
+                oppFTm = float(np.sum(np.array(oppFTmv)[bPlayed]))
+                oppFTa = float(np.sum(np.array(oppFTav)[bPlayed]))
+                oppPoints = float(np.sum(np.array(oppPointsv)[bPlayed]))
+                oppORB = float(np.sum(np.array(oppORBv)[bPlayed]))
+                oppDRB = float(np.sum(np.array(oppDRBv)[bPlayed]))
+                oppPer = float(np.sum(np.array(oppPerv)[bPlayed]))
+                oppFp = float(np.sum(np.array(oppFpv)[bPlayed]))
 
-            try:
-                teamScoringP = float(teamFGm + (1 - (1 - (teamFTm / teamFTa)) ** 2) * teamFTa * 0.4)
-            except:
-                pass
-            teamPlayp = float(teamScoringP) / float(teamFGa + teamFTa * 0.4 + teamPer)
-            teamORBp = float(teamORB) / float(teamORB + oppDRB)
-            teamORBw = float((1 - teamORBp) * teamPlayp) / float((1 - teamORBp) * teamPlayp + teamORBp * (1 - teamPlayp))
-            teamStats = (teamFGa + 0.4*teamFTa - 1.07 * (teamORB/(teamORB+oppDRB)) * (teamFGa-teamFGm) + teamPer)
-            oppStats = (oppFGA + 0.4*oppFTa - 1.07 * (oppORB/(oppORB+teamDRB)) * (oppFGA-oppFGM) + oppPer)
-            teamPoss = 0.5*(teamStats+oppStats)
-            oppPos = teamPoss
+                try:
+                    teamScoringP = float(teamFGm + (1 - (1 - (teamFTm / teamFTa)) ** 2) * teamFTa * 0.4)
+                except:
+                    pass
+                teamPlayp = float(teamScoringP) / float(teamFGa + teamFTa * 0.4 + teamPer)
+                teamORBp = float(teamORB) / float(teamORB + oppDRB)
+                teamORBw = float((1 - teamORBp) * teamPlayp) / float((1 - teamORBp) * teamPlayp + teamORBp * (1 - teamPlayp))
+                teamStats = (teamFGa + 0.4*teamFTa - 1.07 * (teamORB/(teamORB+oppDRB)) * (teamFGa-teamFGm) + teamPer)
+                oppStats = (oppFGA + 0.4*oppFTa - 1.07 * (oppORB/(oppORB+teamDRB)) * (oppFGA-oppFGM) + oppPer)
+                teamPoss = 0.5*(teamStats+oppStats)
+                oppPos = teamPoss
 
-            try:
-                avStats[indPl][26][0] = (100*float(iAssis)/(((float(iMins)/(float(teamMins)/float(5)))*teamFGm)-indFGm))
-            except:
-                pass
+                try:
+                    avStats[indPl][26][0] = (100*float(iAssis)/(((float(iMins)/(float(teamMins)/float(5)))*teamFGm)-indFGm))
+                except:
+                    pass
 
-            # eFG
-            if indFGa != 0:
-                avStats[indPl][27][0] = (float(indFGm+0.5*(int(it3M)))/float(indFGa))
-            else:
-                avStats[indPl][27][0] = 0
+                # eFG
+                if indFGa != 0:
+                    avStats[indPl][27][0] = (float(indFGm+0.5*(int(it3M)))/float(indFGa))
+                else:
+                    avStats[indPl][27][0] = 0
 
-            # TS
-            if float(2*(float(indFGa)+0.44*float(it1A))) != 0:
-                avStats[indPl][28][0] = float(iPts)/float(2*(float(indFGa)+0.44*float(it1A)))
-            else:
-                avStats[indPl][28][0] = 0
+                # TS
+                if float(2*(float(indFGa)+0.44*float(it1A))) != 0:
+                    avStats[indPl][28][0] = float(iPts)/float(2*(float(indFGa)+0.44*float(it1A)))
+                else:
+                    avStats[indPl][28][0] = 0
 
-            # Gscore
-            avStats[indPl][29][0] = float(iPts)+0.4*float(indFGm)+0.7*float(iOfReb)+0.3*float(iDefReb)+float(iRec)+0.7*float(iAssis)+0.7*float(iTapF)-0.7*float(indFGa)-0.4*float(it1A-it1M)-0.4*float(iFal)-float(iPer)
+                # Gscore
+                avStats[indPl][29][0] = float(iPts)+0.4*float(indFGm)+0.7*float(iOfReb)+0.3*float(iDefReb)+float(iRec)+0.7*float(iAssis)+0.7*float(iTapF)-0.7*float(indFGa)-0.4*float(it1A-it1M)-0.4*float(iFal)-float(iPer)
 
-            # qAst = ((float(iMins)/float(teamMins/5)) * (1.14 * (float(teamAssis-iAssis)/float(teamFGm)))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
-            qAst = ((float(iMins)/float(teamMins/5)) * (float(teamAssis-iAssis)/float(teamFGm-indFGm))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
-            try:
-                FG_Part = indFGm * (1 - 0.5 * ((iPts - it1M) / (2 * indFGa)) * qAst)
-            except:
-                FG_Part = 0
+                # qAst = ((float(iMins)/float(teamMins/5)) * (1.14 * (float(teamAssis-iAssis)/float(teamFGm)))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
+                try:
+                    qAst = ((float(iMins)/float(teamMins/5)) * (float(teamAssis-iAssis)/float(teamFGm-indFGm))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
+                except:
+                    qAst = 0
 
-            AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
-            try:
-                FT_Part = (1 - (1 - (it1M / it1A)) ** 2) * 0.4 * it1A
-            except:
-                FT_Part = 0
+                try:
+                    FG_Part = indFGm * (1 - 0.5 * ((iPts - it1M) / (2 * indFGa)) * qAst)
+                except:
+                    FG_Part = 0
 
-            ORB_Part = iOfReb * teamORBw * teamPlayp
-            scPoss = (FG_Part + AST_Part + FT_Part) * (1 - (teamORB / teamScoringP) * teamORBw * teamPlayp) + ORB_Part
+                AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
+                try:
+                    FT_Part = (1 - (1 - (it1M / it1A)) ** 2) * 0.4 * it1A
+                except:
+                    FT_Part = 0
 
-            FGxPoss = (indFGa - indFGm) * (1 - 1.07 * teamORBp)
-            try:
-                FTxPoss = ((1 - (it1M /it1A)) ** 2) * 0.4 * it1A
-            except:
-                FTxPoss = 0
+                ORB_Part = iOfReb * teamORBw * teamPlayp
+                scPoss = (FG_Part + AST_Part + FT_Part) * (1 - (teamORB / teamScoringP) * teamORBw * teamPlayp) + ORB_Part
 
-            nscPoss = FGxPoss + FTxPoss + iPer
+                FGxPoss = (indFGa - indFGm) * (1 - 1.07 * teamORBp)
+                try:
+                    FTxPoss = ((1 - (it1M /it1A)) ** 2) * 0.4 * it1A
+                except:
+                    FTxPoss = 0
 
-            # Scored Poss
-            avStats[indPl][30][0] = scPoss
+                nscPoss = FGxPoss + FTxPoss + iPer
 
-            # Non Scored Poss
-            avStats[indPl][31][0] = nscPoss
+                # Scored Poss
+                avStats[indPl][30][0] = scPoss
 
-            # Tot Poss
-            avStats[indPl][32][0] = int(scPoss+nscPoss)
+                # Non Scored Poss
+                avStats[indPl][31][0] = nscPoss
 
-            # Floor Percentage
-            try:
-                avStats[indPl][33][0] = avStats[indPl][33][0] + (float(100)*(float(scPoss)/float(nscPoss+scPoss)))
-            except:
-                pass
+                # Tot Poss
+                avStats[indPl][32][0] = int(scPoss+nscPoss)
 
-            # Points per Shot
-            if float(it2A+it3A) != 0:
-                fPointspshot = float(2*it2M+3*it3M)/float(it2A+it3A)
-                avStats[indPl][34][0] = fPointspshot
+                # Floor Percentage
+                try:
+                    avStats[indPl][33][0] = avStats[indPl][33][0] + (float(100)*(float(scPoss)/float(nscPoss+scPoss)))
+                except:
+                    pass
 
-            # % Reb
-            teamAgRebs = oppDRB+oppORB
-            teamRebs = teamDRB+teamORB
-            fPerReb = 100*float((iOfReb+iDefReb)*(float(teamMins)/float(5)))/float(float(iMins)*(teamRebs+teamAgRebs))
-            fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
-            fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
-            avStats[indPl][35][0] = fPerReb
-            avStats[indPl][36][0] = fPerDefReb
-            avStats[indPl][37][0] = fPerOfReb
+                # Points per Shot
+                if float(it2A+it3A) != 0:
+                    fPointspshot = float(2*it2M+3*it3M)/float(it2A+it3A)
+                    avStats[indPl][34][0] = fPointspshot
 
-            # % Steals
-            fStPer = float(100)*(float(float(iRec)*(float(teamMins)/float(5)))/float(iMins*oppPos))
-            avStats[indPl][38][0] = fStPer
+                # % Reb
+                teamAgRebs = oppDRB+oppORB
+                teamRebs = teamDRB+teamORB
+                fPerReb = 100*float((iOfReb+iDefReb)*(float(teamMins)/float(5)))/float(float(iMins)*(teamRebs+teamAgRebs))
+                fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
+                fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
+                avStats[indPl][35][0] = fPerReb
+                avStats[indPl][36][0] = fPerDefReb
+                avStats[indPl][37][0] = fPerOfReb
 
-            # Touches
-            fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
-            avStats[indPl][39][0] = + fTouches
+                # % Steals
+                fStPer = float(100)*(float(float(iRec)*(float(teamMins)/float(5)))/float(iMins*oppPos))
+                avStats[indPl][38][0] = fStPer
 
-            fUsage1 = (float(indFGa)+0.44*it1A+iPer)*float(teamMins)
-            fUsage2 = (float(teamFGm) + 0.44*teamFTa + teamPer) * float(5) * float(iMins)
+                # Touches
+                fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
+                avStats[indPl][39][0] = + fTouches
 
-            if fUsage2 != 0:
-                fUsage = 100*(fUsage1)/(fUsage2)
-                avStats[indPl][40][0] = fUsage
+                fUsage1 = (float(indFGa)+0.44*it1A+iPer)*float(teamMins)
+                fUsage2 = (float(teamFGm) + 0.44*teamFTa + teamPer) * float(5) * float(iMins)
 
-            # Versatility
-            avStats[indPl][41][0] = (iPts*float(iOfReb+iDefReb)*iAssis)**(0.333)
+                if fUsage2 != 0:
+                    fUsage = 100*(fUsage1)/(fUsage2)
+                    avStats[indPl][40][0] = fUsage
 
-            # Win Scores
-            fWinScore = iPts + iDefReb + iOfReb + iRec + 0.5*iAssis + 0.5*iTapF - indFGa - iPer - 0.5*it1A - 0.5*iFal
-            avStats[indPl][42][0] = fWinScore
+                # Versatility
+                avStats[indPl][41][0] = (iPts*float(iOfReb+iDefReb)*iAssis)**(0.333)
 
-            try:
-                pPointsProd_FG_Part = 2*(indFGm + 0.5*it3M) * (1 - 0.5*(float(iPts-it1M)/float(2*indFGa)) * qAst)
-            except:
-                pPointsProd_FG_Part = 0
-            pPointsProd_AST_Part = 2 * ((teamFGm - indFGm + 0.5 * (team3Pm - it3M)) / (teamFGm - indFGm)) * 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
-            pPointsProd_ORB_Part = iOfReb * teamORBw * teamPlayp * (teamPts / (teamFGm + (1 - (1 - (teamFTm / teamFTa))** 2) *0.4 * teamFTa))
+                # Win Scores
+                fWinScore = iPts + iDefReb + iOfReb + iRec + 0.5*iAssis + 0.5*iTapF - indFGa - iPer - 0.5*it1A - 0.5*iFal
+                avStats[indPl][42][0] = fWinScore
 
-            pProd = (pPointsProd_FG_Part + pPointsProd_AST_Part + it1M) * (1 - (teamORB / teamScoringP) * teamORBw * teamPlayp) + pPointsProd_ORB_Part
-            try:
-                OERi = 100*(float(pProd)/float(int(scPoss)+int(nscPoss)))
-            except:
-                OERi = 100*(float(teamPts) / float(teamPoss))
+                try:
+                    pPointsProd_FG_Part = 2*(indFGm + 0.5*it3M) * (1 - 0.5*(float(iPts-it1M)/float(2*indFGa)) * qAst)
+                except:
+                    pPointsProd_FG_Part = 0
 
-            if OERi < 1:
-                OERi = 100*(float(teamPts) / float(teamPoss))
+                try:
+                    pPointsProd_AST_Part = 2 * ((teamFGm - indFGm + 0.5 * (team3Pm - it3M)) / (teamFGm - indFGm)) * 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
+                except:
+                    pPointsProd_AST_Part = 0
 
-            DFGp = oppFGM / oppFGA
-            DORp = float(oppORB) / (float(oppORB) + float(teamDRB))
-            FMwt = (DFGp * (1 - DORp)) / (DFGp * (1 - DORp) + (1 - DFGp) * DORp)
-            Stops1 = iRec + iTapF * FMwt * (1 - 1.07 * DORp) + iDefReb * (1 - FMwt)
-            Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
-            Stops = Stops1 + Stops2
-            Stopp = (Stops * teamMins) / (teamPoss * iMins)
-            DERating = 100 * (oppPoints / teamPoss)
-            DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
-            DERi = DERating + 0.2 * (100 * DpScore * (1 - Stopp) - DERating)
+                try:
+                    pPointsProd_ORB_Part = iOfReb * teamORBw * teamPlayp * (teamPts / (teamFGm + (1 - (1 - (teamFTm / teamFTa))** 2) *0.4 * teamFTa))
+                except:
+                    pPointsProd_ORB_Part = 0
 
-            avStats[indPl][43][0] = OERi
-            avStats[indPl][44][0] = DERi
-            lNeti = float(OERi - DERi)
-            avStats[indPl][45][0] = lNeti
+                pProd = (pPointsProd_FG_Part + pPointsProd_AST_Part + it1M) * (1 - (teamORB / teamScoringP) * teamORBw * teamPlayp) + pPointsProd_ORB_Part
+                try:
+                    OERi = 100*(float(pProd)/float(int(scPoss)+int(nscPoss)))
+                except:
+                    OERi = 100*(float(teamPts) / float(teamPoss))
+
+                if OERi < 1:
+                    OERi = 100*(float(teamPts) / float(teamPoss))
+
+                DFGp = oppFGM / oppFGA
+                DORp = float(oppORB) / (float(oppORB) + float(teamDRB))
+                FMwt = (DFGp * (1 - DORp)) / (DFGp * (1 - DORp) + (1 - DFGp) * DORp)
+                Stops1 = iRec + iTapF * FMwt * (1 - 1.07 * DORp) + iDefReb * (1 - FMwt)
+                Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
+                Stops = Stops1 + Stops2
+                Stopp = (Stops * teamMins) / (teamPoss * iMins)
+                DERating = 100 * (oppPoints / teamPoss)
+                DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
+                DERi = DERating + 0.2 * (100 * DpScore * (1 - Stopp) - DERating)
+
+                avStats[indPl][43][0] = OERi
+                avStats[indPl][44][0] = DERi
+                lNeti = float(OERi - DERi)
+                avStats[indPl][45][0] = lNeti
 
 
 def parse_stats_scratch_team(statsPlayers, game, indPl, sType, bAgainst):
@@ -1445,4 +1457,3 @@ def filterPlayers(inPlayers,sPlayers):
             pass
     outPlayers = list(np.transpose(outPlayers))
     return outPlayers
-
