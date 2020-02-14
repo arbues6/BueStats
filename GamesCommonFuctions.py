@@ -300,8 +300,6 @@ def computeAdvStats(statsPlayers, avStats, teamStats=None, teamStatsAg=None):
 
 
     for indPl in range(0, len(avStats)):
-        if indPl == 5:
-            a = 1
         name = avStats[indPl][0]
         bPlayed = []
         game = 0
@@ -405,7 +403,11 @@ def computeAdvStats(statsPlayers, avStats, teamStats=None, teamStatsAg=None):
                 except:
                     FG_Part = 0
 
-                AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
+                try:
+                    AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
+                except:
+                    pass
+
                 try:
                     FT_Part = (1 - (1 - (it1M / it1A)) ** 2) * 0.4 * it1A
                 except:
