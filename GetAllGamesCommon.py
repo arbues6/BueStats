@@ -117,7 +117,10 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
 
     sPlayers = sPlayers.split(',')
     sPlayers = [x.upper() for x in sPlayers]
-
+    
+    againstTeams = [x.upper() for x in againstTeams]
+    againstTeams2 = [x.upper() for x in againstTeams2]
+    
     for page in range(pageIn,pageFin+1):
         print(sExt + ' (' + str(page-pageIn+1) + '/' + str(pageFin-pageIn+1) + ')')
         if page != 0:
