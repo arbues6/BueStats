@@ -91,7 +91,7 @@ outputFolder=/mnt/DATA/FCBScrapping/Reports
 By clicking the *Load Configuration* button (and making sure the *Configuration Folder* is properly set), the information in the text file is loaded. 
 
 ## 5. Data Ownership
-All extracted BueStats' data belong to the Spanish Basketball Federation (FEB), and it is available for non-lucrative purposes. Please cite this GitHub or mention "BueStats" if you are using this tool for writting scientific publications or sports articles (researchers and journalists). 
+All extracted BueStats' data belong to the Spanish Basketball Federation (FEB) and their corresponding boxscores, which are available online only for non-lucrative purposes. Please cite this GitHub or BueStats ifself if you are using this tool for writing scientific publications or sports articles (researchers and journalists). 
 
 ## 6. Contact
 You can reach me by email (adria.arbues@upf.edu) or by Twitter (@arbues6), and any suggestion or doubt will be kindly addressed! However, I have a thesis to finish in less than 2 years, so I won't have the chance of adding brand new features quickly. <br/>
