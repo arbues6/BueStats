@@ -93,7 +93,7 @@ class Application(Frame):
         self.folderLabel.grid(row=4, column=0, sticky=W)
         self.text_folder = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_folder.grid(row=4, column=1, columnspan=1, sticky=W)
-        self.text_folder.insert(END, os.path.dirname(os.path.abspath(__file__)) + "/Images")
+        self.text_folder.insert(END, os.path.dirname(os.path.abspath(__file__)) + "/Reports/Images")
         # self.text_folder.configure(state="disabled")
 
     def create_xAxis_widget(self):
