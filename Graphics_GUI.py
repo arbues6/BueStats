@@ -233,7 +233,7 @@ class Application(Frame):
         yAxisF = self.yAxis.get()
 
         teamStats = np.load(fileLoad, allow_pickle=True)
-        teamStatsAg = np.load(fileLoad, allow_pickle=True)
+        teamStatsAg = np.load(fileLoad[:-4] + 'Against.npy', allow_pickle=True)
         libDraw.draw2Features(teamStats, teamStatsAg, sDir, xAxisF, yAxisF, season, division, jorFirst, jorLast)
         a = 1
 
