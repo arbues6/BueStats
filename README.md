@@ -90,9 +90,16 @@ outputFolder=/mnt/DATA/FCBScrapping/Reports
 ```
 By clicking the *Load Configuration* button (and making sure the *Configuration Folder* is properly set), the information in the text file is loaded. 
 
-## 5. Data Ownership
+## 5. Plotting Interface
+(NEW FEATURES! March 22nd)
+As you might see, another GUI has been included in the source code (Graphics_GUI.py). 
+Following the same nomenclature as the one seen in the previous Sections, simple 2D graphics with team logos can be extracted for any desired statistic (in both the X and Y axes), which can be classical ones / advanced / stats of the opponents. In order to do so, just create a folder called "Images" inside the existing "Reports" one (e.g. mkdir /mnt/DATA/FCBScrapping/Reports/Images) and copy and extract the images of "Logos.zip", which include (thanks to FEB and Muevetebasket) all 2019 logos splitted by divisions. 
+Then, you just have to choose the desired rounds and statistics, and the plot will be automatically stored in your folder. Moreover, some npy files are also stored automatically to speed up the process. For instance, the first time you want to plot a specific graphic for (eg) 22 rounds, the scraper will browse around FEB website until getting all data; this process might take a while, but by storing these .npy arrays, it will be fully automatic the next time, without having to wait or whatsoever. Note that I included some default NPY files in a zip file (which are the ones corresponding to team data of some of the competitions before the covid-19 interruption).
+
+
+## 6. Data Ownership
 All extracted BueStats' data belong to the Spanish Basketball Federation (FEB) and their corresponding boxscores, which are available online only for non-lucrative purposes. Please cite this GitHub or BueStats ifself if you are using this tool for writing scientific publications or sports articles (researchers and journalists). 
 
-## 6. Contact
+## 7. Contact
 You can reach me by email (adria.arbues@upf.edu) or by Twitter (@arbues6), and any suggestion or doubt will be kindly addressed! However, I have a thesis to finish in less than 2 years, so I won't have the chance of adding brand new features quickly. <br/>
 Executable files for Mac, Windows, and Linux, and tutorials are available in my [UPF Website](https://www.upf.edu/web/adria-arbues/buestats).
