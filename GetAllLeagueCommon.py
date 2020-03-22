@@ -20,7 +20,7 @@ sAway = []
 sWin = []
 sDif = []
 
-def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,division,sDir,sChrome,bTeam,sPlayers,bProj,sLeague,sOutput,sMinGames, sLang):
+def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,division,sDir,sChrome,bTeam,sPlayers,bProj,sLeague,sOutput,sMinGames, sLang, bOnlyTeam):
 
     html_doc_alt1 = html_doc + "&med=0"
     html_doc_alt2 = html_doc + "&med=1"
@@ -253,8 +253,14 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 except:
                     pass
 
-    if sPlayers != []:
+    if sPlayers != [] and bOnlyTeam == False:
         sOutput = sOutput + '-' + str(len(sPlayers)) + 'Pl'
-    GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang)
-    GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang, len(sPlayers))
 
+    if bOnlyTeam == False:
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, False)
+        GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang, len(sPlayers))
+    else:
+        if targetTeam[4:9] == 'PLATA' or targetTeam[4:7] == 'LF2' or targetTeam[4:7] == 'EBA':
+            sOutput = targetTeam[4:]
+            sLeague = ''
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, True)

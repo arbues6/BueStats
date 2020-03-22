@@ -976,7 +976,7 @@ def stats2csvFaseTeamAllExtend(avStatsT,avStatsAg,csvFile, sLang):
     #df.sort_values(['Nombre'], inplace=True)
     df.to_csv(csvFile, index=False)
 
-def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, strFase, bTeam, bProj, teamNames, sMinGames, sLang):
+def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, strFase, bTeam, bProj, teamNames, sMinGames, sLang, bOnlyTeam):
     players = []
     avStats = []
     playersT = []
@@ -1025,34 +1025,35 @@ def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, str
         tryAppend(teamStatsAg, te)
 
     avStatsArr = np.copy(np.array(avStats))
-    stats2csvLeague(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
-    if bTeam:
-        stats2csvFaseTeam(teamStats, teamStatsAg, sDir + '/t'+targetTeam+season+ 'J' + str(jorFirst) + 'J' + str(jorLast) +  strFase + '.csv', False, sLang)
-
-    namesArr = np.array(avStatsArr[:, 0])
-    if platform == 'Linux' or platform == 'Darwin':
-        namesArr = np.array([str(x)[5:-4] for x in namesArr])
+    if bOnlyTeam == False:
+        stats2csvLeague(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
     else:
-        namesArr = np.array([str(str(x[0][1:-1])) for x in namesArr])
-    gamesArr = np.array(avStatsArr[:, 2])
-    gamesArr = np.array([int(x[0]) for x in gamesArr])
+        np.save(sDir + '/' + targetTeam + strFase + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + '.npy', teamStats)
+        np.save(sDir + '/' + targetTeam + strFase + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + 'Against.npy', teamStatsAg)
 
+    if bOnlyTeam == False:
+        namesArr = np.array(avStatsArr[:, 0])
+        if platform == 'Linux' or platform == 'Darwin':
+            namesArr = np.array([str(x)[5:-4] for x in namesArr])
+        else:
+            namesArr = np.array([str(str(x[0][1:-1])) for x in namesArr])
+        gamesArr = np.array(avStatsArr[:, 2])
+        gamesArr = np.array([int(x[0]) for x in gamesArr])
 
-    if sMinGames != None and sMinGames != '':
-        iMinGames = int(sMinGames)
-    else:
-        iMinGames = np.max(gamesArr) / 2
+        if sMinGames != None and sMinGames != '':
+            iMinGames = int(sMinGames)
+        else:
+            iMinGames = np.max(gamesArr) / 2
 
-    topStats = []
-    for iStat in range(3, len(avStats[0])-1):
-        statArr = np.array(avStatsArr[:, iStat])
-        statArr = np.array([float(x[0]) for x in statArr])
-        statArr = statArr*(gamesArr>iMinGames)
-        inds = statArr.argsort()[::-1]
-        sortedPlayers = namesArr[inds]
-        topStats.append(sortedPlayers)
-        sortedVal = statArr[inds]
-        topStats.append(sortedVal)
-
-    ranking2csv(topStats, sDir + '/pRankings'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
+        topStats = []
+        for iStat in range(3, len(avStats[0])-1):
+            statArr = np.array(avStatsArr[:, iStat])
+            statArr = np.array([float(x[0]) for x in statArr])
+            statArr = statArr*(gamesArr>iMinGames)
+            inds = statArr.argsort()[::-1]
+            sortedPlayers = namesArr[inds]
+            topStats.append(sortedPlayers)
+            sortedVal = statArr[inds]
+            topStats.append(sortedVal)
+        ranking2csv(topStats, sDir + '/pRankings'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
 

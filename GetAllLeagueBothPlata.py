@@ -103,7 +103,7 @@ def extractStatisticsPlata(html_doc,targetTeam,againstTeams,againstTeams2,season
     if bAll:
         GC.get5FasesStats(sLang, statsPlayers, season, jorFirst, jorLast*2, sDir, int(1), targetTeam, sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif)
 
-def extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,division1,division2,sDir,sChrome,bTeam,sPlayers,bProj,sLeague,sOutput,sMinGames, sLang):
+def extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,division1,division2,sDir,sChrome,bTeam,sPlayers,bProj,sLeague,sOutput,sMinGames, sLang, bOnlyTeam):
     if sLang == "Castellano":
         sAllR = ""
         sFase = 'Fase '
@@ -138,8 +138,11 @@ def extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,divisi
     teamNames.extend(teamNames1)
     teamNames.extend(teamNames2)
 
-    GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast*2, sDir,sOutput,bTeam, bProj, teamNames, sMinGames, sLang)
-    GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast*2, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang)
+    if bOnlyTeam == False:
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast*2, sDir,sOutput,bTeam, bProj, teamNames, sMinGames, sLang, False)
+        GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast*2, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang)
+    else:
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast*2, sDir,'-'+division1+'-'+division2,bTeam, bProj, teamNames, sMinGames, sLang, True)
 
 def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorFirst,jorLast,division,sDir,fases,sChrome,bAll,bTeam,sPlayers,bProj,sLeague,sOutput, sMinGames, sLang, bLast):
 

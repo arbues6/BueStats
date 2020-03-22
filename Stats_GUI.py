@@ -458,17 +458,17 @@ class Application(Frame):
 
         if targetTeam == 'Liga' or targetTeam == 'LIGA':
             if division == 'ORO' or division == 'DIA' or division == 'ENDESA':
-                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division, sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division, sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
             elif divSplit == 'PLATA':
                 if bUnaFase == False:
-                    GetAllLeagueBothPlata.extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,division.split(',')[1],division.split(',')[2],sDir,self.text_chrome,bTeam,sPlayers,bProj,division,'',sMinGames, sLang)
+                    GetAllLeagueBothPlata.extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,division.split(',')[1],division.split(',')[2],sDir,self.text_chrome,bTeam,sPlayers,bProj,division,'',sMinGames, sLang, False)
                     reload(GetAllLeagueBothPlata)
                 else:
-                    GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang)
+                    GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang, False)
             elif divSplit == 'EBA':
-                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
             elif divSplit == 'LF2':
-                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
             reload(GetAllLeagueCommon)
         else:
             targetTeams = targetTeam.replace(' ', '').split(',')
