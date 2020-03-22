@@ -240,7 +240,7 @@ class Application(Frame):
 #if __name__ == '__main__':
 root = Tk()
 root.title("BueStats Graphics (Adrià Arbués-Sangüesa, @arbues6)")
-root.geometry("950x450")
+root.geometry("950x250")
 root.columnconfigure(0, weight=1)
 root.resizable(0, 0)
 
