@@ -29,6 +29,13 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
 
     system = platform.system()
 
+    if system == 'Linux':
+        iBenIn = 2
+        iEndIn = -1
+    elif system == 'Darwin' or system == 'Windows':
+        iBenIn = 0
+        iEndIn = 0
+
     if sLang == "Castellano":
         sAllR = "Jornadas"
         sJor = 'Jornada: '
@@ -38,7 +45,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         sJor = 'Round: '
         sExtr = 'Extracting Games:'
 
-    jornadas = soup.find_all('div', class_="contentTablaDataGrid")
+    jornadas = soup.find_all('table')
     firstJornada = jornadas[0].text.split('/')[0]
 
     chrome_options = Options()
@@ -46,41 +53,52 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
     chrome_options.add_argument("--start-maximized")
 
     if sLeague != 'ORO' and sLeague != 'DIA':
+        if sLeague[:3] == 'ORO':
+            division = sLeague[4:]
         driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-        driver.maximize_window()
         driver.get(html_doc)
-        select = Select(driver.find_element_by_id('gruposDropDownList'))
+        # select = Select(driver.find_element_by_id('gruposDropDownList'))
+        select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
         if system == 'Linux' or system == 'Darwin':
             for listPhase in range(0, len(select.options)):
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
         else:
             for listPhase in range(0, len(select.options)):
-                if str(division.encode('ascii', 'ignore')).upper() in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '').split(' '):
+                if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
-        time.sleep(5)
+
+        select.select_by_visible_text(select.options[iSelect].text)
+        # time.sleep(5)
+        to_soup = driver.page_source
         driver.close()
+        soup = BeautifulSoup(to_soup, 'lxml')
+        jornadas = soup.find_all('table')
 
         if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
             driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
             driver.get(html_doc_alt1)
-            select = Select(driver.find_element_by_id('gruposDropDownList'))
+            select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
             select.select_by_visible_text(select.options[iSelect].text)
-            time.sleep(5)
+            # time.sleep(5)
             to_soup = driver.page_source
             driver.close()
             soup = BeautifulSoup(to_soup, 'lxml')
             jornadas = soup.find_all('div', class_="contentTablaDataGrid")
-            if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                driver.get(html_doc_alt2)
-                select = Select(driver.find_element_by_id('gruposDropDownList'))
-                select.select_by_visible_text(select.options[iSelect].text)
-                time.sleep(5)
-                to_soup = driver.page_source
-                driver.close()
-                soup = BeautifulSoup(to_soup, 'lxml')
-                jornadas = soup.find_all('div', class_="contentTablaDataGrid")
+            try:
+                if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
+                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
+                    driver.get(html_doc_alt2)
+                    select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
+                    select.select_by_visible_text(select.options[iSelect].text)
+                    # time.sleep(5)
+                    to_soup = driver.page_source
+                    driver.close()
+                    soup = BeautifulSoup(to_soup, 'lxml')
+                    jornadas = soup.find_all('div', class_="contentTablaDataGrid")
+            except:
+                pass
+        jornadas = soup.find_all('table')
 
     resLoc = []
     resVis = []
@@ -91,118 +109,35 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
 
     jorTot = 0
 
-    pageIn = int(float(jorFirst-1)/float(8))
-    pageFin = int(float(jorLast-1)/float(8))
-    jorFirstPage = int(float(jorFirst) - float(pageIn)*float(8))-1
-    jorLastPage = int(float(jorLast) - float(pageFin)*float(8))
+    pageIn = 0
+    pageFin = 1
+
+    jorProcessFirst = int(jorFirst)-1
+    jorProcessLast = int(jorLast)
 
     sPlayers = sPlayers.split(',')
     sPlayers = [x.upper() for x in sPlayers]
 
-    for page in range(pageIn,pageFin+1):
-        print(sExtr + ' (' + str(page-pageIn+1) + '/' + str(pageFin-pageIn+1) + ')')
-        if page != 0:
-            if sLeague != 'ORO' and sLeague != 'DIA':
-                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                driver.get(html_doc)
-                driver.delete_all_cookies()
-                select = Select(driver.find_element_by_id('gruposDropDownList'))
-                select.select_by_visible_text(select.options[iSelect].text)
-                time.sleep(5)
-                try:
-                    select = driver.find_element_by_link_text(str(page + 1)).click()
-                except:
-                    pass
-            else:
-                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                # driver = webdriver.PhantomJS()
-                driver.get(html_doc)
-                driver.delete_all_cookies()
-                select = driver.find_element_by_link_text(str(page + 1)).click()
-
-            time.sleep(5)
-            to_soup = driver.page_source
-            driver.close()
-            soup = BeautifulSoup(to_soup, 'lxml')
-            jornadasNew = soup.find_all('div', class_="contentTablaDataGrid")
-            if firstJornada != jornadasNew[0].text.split('/')[0]:
-                jornadas = jornadasNew
-            else:
-                driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                if sLeague != 'ORO' and sLeague != 'DIA':
-                    driver.get(html_doc_alt1)
-                    driver.delete_all_cookies()
-                    select = Select(driver.find_element_by_id('gruposDropDownList'))
-                    select.select_by_visible_text(select.options[iSelect].text)
-                    time.sleep(5)
-                    select = driver.find_element_by_link_text(str(page + 1)).click()
-                    time.sleep(5)
-                    to_soup = driver.page_source
-                    driver.close()
-                else:
-                    # driver = webdriver.PhantomJS()
-                    driver.get(html_doc_alt1)
-                    driver.delete_all_cookies()
-                    select = driver.find_element_by_link_text(str(page + 1)).click()
-                    time.sleep(5)
-                    to_soup = driver.page_source
-                    driver.close()
-
-                soup = BeautifulSoup(to_soup, 'lxml')
-                jornadasNew = soup.find_all('div', class_="contentTablaDataGrid")
-                if firstJornada != jornadasNew[0].text.split('/')[0]:
-                    jornadas = jornadasNew
-                else:
-                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                    if sLeague != 'ORO' and sLeague != 'DIA':
-                        driver.get(html_doc_alt2)
-                        driver.delete_all_cookies()
-                        select = Select(driver.find_element_by_id('gruposDropDownList'))
-                        select.select_by_visible_text(select.options[iSelect].text)
-                        time.sleep(5)
-                        select = driver.find_element_by_link_text(str(page + 1)).click()
-                        time.sleep(5)
-                        to_soup = driver.page_source
-                        driver.close()
-                    else:
-                        driver.get(html_doc_alt2)
-                        driver.delete_all_cookies()
-                        select = driver.find_element_by_link_text(str(page + 1)).click()
-                        time.sleep(5)
-                        to_soup = driver.page_source
-                        driver.close()
-                    soup = BeautifulSoup(to_soup, 'lxml')
-                    jornadasNew = soup.find_all('div', class_="contentTablaDataGrid")
-                    if firstJornada != jornadasNew[0].text.split('/')[0]:
-                        jornadas = jornadasNew
-        if page == pageFin and pageFin != 0:
-            jorProcessFirst = 0
-            jorProcessLast = jorLastPage
-        elif pageFin == 0:
-            jorProcessFirst = jorFirst-1
-            jorProcessLast = jorLast
-        elif page == pageIn:
-            jorProcessFirst = jorFirstPage
-            jorProcessLast = 8
-        else:
-            jorProcessFirst = 0
-            jorProcessLast = 8
-
+    for page in range(pageIn,pageFin):
+        print(sExtr)
         for jornada in range(jorProcessFirst, jorProcessLast):
             print(sJor + str(jorProcessFirst + (jornada-jorProcessFirst) + 1))
             jorTot += 1
             jornadaInd = jornadas[jornada]
-            gamesJorn = jornadaInd.find_all('td')[3:]
+            gamesJorn = jornadaInd.find_all('td')
+            itOdd = 0
             for k in range(0, len(gamesJorn), 3):
-                gameCode = gamesJorn[k + 1].find_all('a')[0]['href']
+                itOdd += 1
+
+                gameCode = gamesJorn[k+1].find_all('a')[0]['href']
                 realLink = "http://competiciones.feb.es/Estadisticas/" + gameCode
                 a, b = GetStatsGame.getStats(realLink)
 
-                locTeam = str(unicodedata.normalize('NFKD', gamesJorn[k].text.split('\n')[1]).encode('ascii', 'ignore'))
-                visTeam = str(unicodedata.normalize('NFKD', gamesJorn[k].text.split('\n')[2]).encode('ascii', 'ignore'))
+                locTeam = str(unicodedata.normalize('NFKD', gamesJorn[k].text.split('\n')[1]).encode('ascii', 'ignore'))[iBenIn:iEndIn]
+                visTeam = str(unicodedata.normalize('NFKD', gamesJorn[k+2].text.split('\n')[1]).encode('ascii', 'ignore'))[iBenIn:iEndIn]
 
-                resLocIn = int(gamesJorn[k + 1].text.split('\n')[1])
-                resVisIn = int(gamesJorn[k + 1].text.split('\n')[2])
+                resLocIn = int(gamesJorn[k+1].text.split('\n')[1].split('-')[0])
+                resVisIn = int(gamesJorn[k+1].text.split('\n')[1].split('-')[1])
 
                 resLoc.append(resLocIn)
                 resVis.append(resVisIn)
@@ -212,9 +147,17 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                     else:
                         a1 = a
                     if a1 != []:
-                        statsPlayers.append(a1)
-                        teamStats = GetStatsTeam.getStats(realLink, True)
-                        teamStatsAgainst = GetStatsTeam.getStatsAgainst(realLink, False)
+                        a1p = [list(x) for x in list(np.array(a1)[:, :-1])]
+                        statsPlayers.append(a1p)
+                        teamStats = list(np.array(a1)[:, -1])
+                        teamStatsAgainst = list(np.array(b)[:, -1])
+                        if sLang == 'Castellano':
+                            teamStats[0] = 'Equipo'
+                            teamStatsAgainst[0] = 'Equipo Rival'
+                        else:
+                            teamStats[0] = 'Team'
+                            teamStatsAgainst[0] = 'Team Against'
+
                         statsPlayers.append(teamStats)
                         statsPlayers.append(teamStatsAgainst)
                         teamNames.append('Players')
@@ -234,9 +177,16 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                     else:
                         b1 = b
                     if b1 != []:
-                        statsPlayers.append(b1)
-                        teamStats = GetStatsTeam.getStats(realLink, False)
-                        teamStatsAgainst = GetStatsTeam.getStatsAgainst(realLink, True)
+                        b1p = [list(x) for x in list(np.array(b1)[:, :-1])]
+                        teamStats = list(np.array(b1)[:, -1])
+                        teamStatsAgainst = list(np.array(a)[:, -1])
+                        if sLang == 'Castellano':
+                            teamStats[0] = 'Equipo'
+                            teamStatsAgainst[0] = 'Equipo Rival'
+                        else:
+                            teamStats[0] = 'Team'
+                            teamStatsAgainst[0] = 'Team Against'
+                        statsPlayers.append(b1p)
                         statsPlayers.append(teamStats)
                         statsPlayers.append(teamStatsAgainst)
                         teamNames.append('Players')
@@ -257,7 +207,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         sOutput = sOutput + '-' + str(len(sPlayers)) + 'Pl'
 
     if bOnlyTeam == False:
-        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, False)
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, True)
         GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang, len(sPlayers))
     else:
         if targetTeam[4:9] == 'PLATA' or targetTeam[4:7] == 'LF2' or targetTeam[4:7] == 'EBA':
