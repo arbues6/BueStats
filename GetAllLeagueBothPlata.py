@@ -162,12 +162,8 @@ def extractStatistics(html_doc,targetTeam,againstTeams,againstTeams2,season,jorF
 
     jornadas = soup.find_all('table')
 
-    if system == 'Linux':
-        iBenIn = 2
-        iEndIn = -1
-    elif system == 'Darwin' or system == 'Windows':
-        iBenIn = 0
-        iEndIn = 0
+    iBenIn = 2
+    iEndIn = -1
 
     if sLeague != 'ORO' and sLeague != 'DIA':
         if sLeague[:3] == 'ORO':
@@ -378,12 +374,8 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
     jornadas = soup.find_all('table')
     firstJornada = jornadas[0].text.split('/')[0]
 
-    if system == 'Linux':
-        iBenIn = 2
-        iEndIn = -1
-    elif system == 'Darwin' or system == 'Windows':
-        iBenIn = 0
-        iEndIn = 0
+    iBenIn = 2
+    iEndIn = -1
 
     if sLang == "Castellano":
         sAllR = "Jornadas"

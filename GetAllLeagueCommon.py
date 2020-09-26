@@ -28,12 +28,8 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
 
     system = platform.system()
 
-    if system == 'Linux':
-        iBenIn = 2
-        iEndIn = -1
-    elif system == 'Darwin' or system == 'Windows':
-        iBenIn = 0
-        iEndIn = 0
+    iBenIn = 2
+    iEndIn = -1
 
     if sLang == "Castellano":
         sAllR = "Jornadas"
@@ -206,7 +202,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         sOutput = sOutput + '-' + str(len(sPlayers)) + 'Pl'
 
     if bOnlyTeam == False:
-        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, True)
+        GLC.getAvStatsLeague(statsPlayers, sLeague.split(',')[0], season, jorFirst, jorLast, sDir,sOutput,bTeam, bProj, teamNames,sMinGames, sLang, False)
         GLC.get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, int(1), sLeague.split(',')[0], sAllR+sOutput, bTeam, False, sLocal, sAway, sWin, sDif, teamNames, sLang, len(sPlayers))
     else:
         if targetTeam[4:9] == 'PLATA' or targetTeam[4:7] == 'LF2' or targetTeam[4:7] == 'EBA':
