@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 import numpy as np
 import GetStatsGame
-import GetStatsTeam
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import time
