@@ -389,10 +389,13 @@ class Application(Frame):
             groupSplit = division.split(',')[1]
         except:
             pass
-
+        
+        if division == 'ENDESA' or division == 'LF':
+            division = 'DIA'
+            
         if division == 'ORO' or division.split(',')[0] == 'ORO':
             groupFeb = '1'
-        elif division == 'DIA' or division == 'ENDESA' or division == 'LF':
+        elif division == 'DIA':
             groupFeb = '4'
         elif divSplit == 'PLATA':
             bUnaFase = False
