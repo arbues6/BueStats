@@ -392,7 +392,7 @@ class Application(Frame):
 
         if division == 'ORO' or division.split(',')[0] == 'ORO':
             groupFeb = '1'
-        elif division == 'DIA':
+        elif division == 'DIA' or division == 'ENDESA' or division == 'LF':
             groupFeb = '4'
         elif divSplit == 'PLATA':
             bUnaFase = False
