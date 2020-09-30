@@ -645,15 +645,24 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     # % Reb
                     teamAgRebs = oppDRB+oppORB
                     teamRebs = teamDRB+teamORB
-                    fPerReb = 100*float((iOfReb+iDefReb)*(float(teamMins)/float(5)))/float(float(iMins)*(teamRebs+teamAgRebs))
-                    fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
-                    fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
+                    if iMins > 0:
+                        fPerReb = 100*float((iOfReb+iDefReb)*(float(teamMins)/float(5)))/float(float(iMins)*(teamRebs+teamAgRebs))
+                        fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
+                        fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
+                    else:
+                        fPerReb = 0
+                        fPerDefReb = 0
+                        fPerOfReb = 0
+
                     avStats[indPl][35][0] = round(fPerReb,2)
                     avStats[indPl][36][0] = round(fPerDefReb,2)
                     avStats[indPl][37][0] = round(fPerOfReb,2)
 
                     # % Steals
-                    fStPer = float(100)*(float(float(iRec)*(float(teamMins)/float(5)))/float(iMins*oppPos))
+                    if iMins > 0:
+                        fStPer = float(100)*(float(float(iRec)*(float(teamMins)/float(5)))/float(iMins*oppPos))
+                    else:
+                        fStPer = 0
                     avStats[indPl][38][0] = round(fStPer,2)
 
                     # Touches
@@ -704,7 +713,10 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     Stops1 = iRec + iTapF * FMwt * (1 - 1.07 * DORp) + iDefReb * (1 - FMwt)
                     Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
                     Stops = Stops1 + Stops2
-                    Stopp = (Stops * teamMins) / (teamPoss * iMins)
+                    if iMins > 0:
+                        Stopp = (Stops * teamMins) / (teamPoss * iMins)
+                    else:
+                        Stopp = 0
                     DERating = 100 * (oppPoints / teamPoss)
                     DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
                     DERi = DERating + 0.2 * (100 * DpScore * (1 - Stopp) - DERating)

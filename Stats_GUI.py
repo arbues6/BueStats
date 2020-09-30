@@ -93,7 +93,7 @@ class Application(Frame):
 
         self.text_jLast = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_jLast.grid(row=5, column=1, columnspan=1, sticky=W)
-        self.text_jLast.insert(END, "12")
+        self.text_jLast.insert(END, "34")
         # self.text_jLast.configure(state="disabled")
 
     def create_target_widget(self):
@@ -103,7 +103,7 @@ class Application(Frame):
         #self.LabelTeam.grid(row=1, column=0, sticky=W)
         self.text_team = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_team.grid(row=1, column=1, columnspan=1, sticky=W)
-        self.text_team.insert(END, "Liga")
+        self.text_team.insert(END, "Araberri")
         # self.text_team.configure(state="disabled")
 
     def create_against1_widget(self):
@@ -127,7 +127,7 @@ class Application(Frame):
         self.divisionLabel.grid(row=3, column=0, sticky=W)
         self.text_division = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_division.grid(row=3, column=1, columnspan=1, sticky=W)
-        self.text_division.insert(END, "PLATA,ESTE,A1")
+        self.text_division.insert(END, "Oro")
         # self.text_division.configure(state="disabled")
 
     def create_periodos_widget(self):
