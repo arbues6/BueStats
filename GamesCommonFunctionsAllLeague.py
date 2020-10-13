@@ -39,67 +39,59 @@ def tryAppend(mat, iPlayer):
     except:
         pass
 
-def time2secs(timeVec):
-    try:
-        timeSec = (int(timeVec.split(":")[0]) * 60 + int(timeVec.split(":")[1]))
-    except:
-        timeSec = 0
-
-    return timeSec
-
-def parse_stats_scratch_team(statsPlayers, game, indPl, sType, bAgainst):
+def parse_stats_scratch_team(statsPlayers, game, indPl, sType, teamNames):
     lNames = []
-    lNames.append(statsPlayers[game][0])
+    lNames.append((teamNames[game] + ' ' + statsPlayers[game][0][indPl]).encode('ascii', errors='ignore'))
     lTypes = []
     lTypes.append(sType)
     lGames = []
     lGames.append(int(1))
     lMins = []
-    lMins.append(int(time2secs(statsPlayers[game][3])))
+    lMins.append(int(GALC.time2secs(statsPlayers[game][3][indPl])))
     lPts = []
-    lPts.append(int(statsPlayers[game][4]))
+    lPts.append(int(statsPlayers[game][4][indPl]))
     lt2S = []
-    lt2S.append(int(statsPlayers[game][5].split("/")[0]))
+    lt2S.append(int(statsPlayers[game][5][indPl].split("/")[0]))
     lt2A = []
-    lt2A.append(int(statsPlayers[game][5].split("/")[1].split(" ")[0]))
+    lt2A.append(int(statsPlayers[game][5][indPl].split("/")[1].split(" ")[0]))
     lt2p = []
-    lt2p.append(round(float(statsPlayers[game][5].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt2p.append(int(statsPlayers[game][5][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lt3S = []
-    lt3S.append(int(statsPlayers[game][6].split("/")[0]))
+    lt3S.append(int(statsPlayers[game][6][indPl].split("/")[0]))
     lt3A = []
-    lt3A.append(int(statsPlayers[game][6].split("/")[1].split(" ")[0]))
+    lt3A.append(int(statsPlayers[game][6][indPl].split("/")[1].split(" ")[0]))
     lt3p = []
-    lt3p.append(round(float(statsPlayers[game][6].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt3p.append(int(statsPlayers[game][6][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lt1S = []
-    lt1S.append(int(statsPlayers[game][7].split("/")[0]))
+    lt1S.append(int(statsPlayers[game][7][indPl].split("/")[0]))
     lt1A = []
-    lt1A.append(int(statsPlayers[game][7].split("/")[1].split(" ")[0]))
+    lt1A.append(int(statsPlayers[game][7][indPl].split("/")[1].split(" ")[0]))
     lt1p = []
-    lt1p.append(round(float(statsPlayers[game][7].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt1p.append(int(statsPlayers[game][7][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lrOf = []
-    lrOf.append(int(statsPlayers[game][8]))
+    lrOf.append(int(statsPlayers[game][8][indPl]))
     lrDef = []
-    lrDef.append(int(statsPlayers[game][9]))
+    lrDef.append(int(statsPlayers[game][9][indPl]))
     lrReb = []
-    lrReb.append(int(statsPlayers[game][8]) + int(statsPlayers[game][9]))
+    lrReb.append(int(statsPlayers[game][8][indPl]) + int(statsPlayers[game][9][indPl]))
     lAssis = []
-    lAssis.append(int(statsPlayers[game][10]))
+    lAssis.append(int(statsPlayers[game][10][indPl]))
     lRec = []
-    lRec.append(int(statsPlayers[game][11]))
+    lRec.append(int(statsPlayers[game][11][indPl]))
     lPer = []
-    lPer.append(int(statsPlayers[game][12]))
+    lPer.append(int(statsPlayers[game][12][indPl]))
     lTapF = []
-    lTapF.append(int(statsPlayers[game][13]))
+    lTapF.append(int(statsPlayers[game][13][indPl]))
     lTapC = []
-    lTapC.append(int(statsPlayers[game][14]))
+    lTapC.append(int(statsPlayers[game][14][indPl]))
     lMat = []
-    lMat.append(int(statsPlayers[game][15]))
+    lMat.append(int(statsPlayers[game][15][indPl]))
     lFalC = []
-    lFalC.append(int(statsPlayers[game][16]))
+    lFalC.append(int(statsPlayers[game][16][indPl]))
     lFalF = []
-    lFalF.append(int(statsPlayers[game][17]))
+    lFalF.append(int(statsPlayers[game][17][indPl]))
     lVal = []
-    lVal.append(int(statsPlayers[game][18]))
+    lVal.append(int(statsPlayers[game][18][indPl]))
     lPoss = []
     lPoss.append(0)
     lPace = []
@@ -129,66 +121,63 @@ def parse_stats_existing_team(statsPlayers, game, indPl, avStats, iPlayer, sType
     avStats[indPl][2][0] = (int(avStats[indPl][2][0]) + 1)
     # Minutes
     try:
-        avStats[indPl][3][0] = avStats[indPl][3][0] + time2secs(statsPlayers[game][3])
+        avStats[indPl][3][0] = avStats[indPl][3][0] + GALC.time2secs(statsPlayers[game][3][iPlayer])
     except:
         pass
     # Points
-    avStats[indPl][4][0] = int(avStats[indPl][4][0]) + int(statsPlayers[game][4])
+    avStats[indPl][4][0] = int(avStats[indPl][4][0]) + int(statsPlayers[game][4][iPlayer])
     # lt2
-    t2SAux = int(statsPlayers[game][5].split("/")[0])
-    t2AAux = int(statsPlayers[game][5].split("/")[1].split(" ")[0])
+    t2SAux = int(statsPlayers[game][5][iPlayer].split("/")[0])
+    t2AAux = int(statsPlayers[game][5][iPlayer].split("/")[1].split(" ")[0])
     avStats[indPl][5][0] = int(avStats[indPl][5][0]) + t2SAux
     avStats[indPl][6][0] = int(avStats[indPl][6][0]) + t2AAux
     try:
-        avStats[indPl][7][0] = round(float(avStats[indPl][5][0]) / float(avStats[indPl][6][0]),2)
+        avStats[indPl][7][0] = float(avStats[indPl][5][0]) / float(avStats[indPl][6][0])
     except:
         avStats[indPl][7][0] = 0
     # lt3
-    t3SAux = int(statsPlayers[game][6].split("/")[0])
-    t3AAux = int(statsPlayers[game][6].split("/")[1].split(" ")[0])
+    t3SAux = int(statsPlayers[game][6][iPlayer].split("/")[0])
+    t3AAux = int(statsPlayers[game][6][iPlayer].split("/")[1].split(" ")[0])
+    avStats[indPl][8][0] = int(avStats[indPl][8][0]) + t3SAux
+    avStats[indPl][9][0] = int(avStats[indPl][9][0]) + t3AAux
     try:
-        avStats[indPl][8][0] = int(avStats[indPl][8][0]) + t3SAux
-        avStats[indPl][9][0] = int(avStats[indPl][9][0]) + t3AAux
-    except:
-        pass
-    try:
-        avStats[indPl][10][0] = round(float(avStats[indPl][8][0]) / float(avStats[indPl][9][0]),2)
+        avStats[indPl][10][0] = float(avStats[indPl][8][0]) / float(avStats[indPl][9][0])
     except:
         avStats[indPl][10][0] = 0
     # lt1
-    t1SAux = int(statsPlayers[game][7].split("/")[0])
-    t1AAux = int(statsPlayers[game][7].split("/")[1].split(" ")[0])
+    t1SAux = int(statsPlayers[game][7][iPlayer].split("/")[0])
+    t1AAux = int(statsPlayers[game][7][iPlayer].split("/")[1].split(" ")[0])
     avStats[indPl][11][0] = int(avStats[indPl][11][0]) + t1SAux
     avStats[indPl][12][0] = int(avStats[indPl][12][0]) + t1AAux
     try:
-        avStats[indPl][13][0] = round(float(avStats[indPl][11][0]) / float(avStats[indPl][12][0]),2)
+        avStats[indPl][13][0] = float(avStats[indPl][11][0]) / float(avStats[indPl][12][0])
     except:
         avStats[indPl][13][0] = 0
 
     # Rebs
-    rofAux = int(statsPlayers[game][8])
-    rdefAux = int(statsPlayers[game][9])
+    rofAux = int(statsPlayers[game][8][iPlayer])
+    rdefAux = int(statsPlayers[game][9][iPlayer])
     avStats[indPl][14][0] = int(avStats[indPl][14][0]) + rofAux
     avStats[indPl][15][0] = int(avStats[indPl][15][0]) + rdefAux
     avStats[indPl][16][0] = int(avStats[indPl][16][0]) + rofAux + rdefAux
 
-    assisAux = int(statsPlayers[game][10])
+    assisAux = int(statsPlayers[game][10][iPlayer])
     avStats[indPl][17][0] = int(avStats[indPl][17][0]) + assisAux
-    recAux = int(statsPlayers[game][11])
+    recAux = int(statsPlayers[game][11][iPlayer])
     avStats[indPl][18][0] = int(avStats[indPl][18][0]) + recAux
-    perAux = int(statsPlayers[game][12])
+    perAux = int(statsPlayers[game][12][iPlayer])
     avStats[indPl][19][0] = int(avStats[indPl][19][0]) + perAux
-    tapAux = int(statsPlayers[game][13])
+    tapAux = int(statsPlayers[game][13][iPlayer])
     avStats[indPl][20][0] = int(avStats[indPl][20][0]) + tapAux
-    tapRAux = int(statsPlayers[game][14])
+    tapRAux = int(statsPlayers[game][14][iPlayer])
     avStats[indPl][21][0] = int(avStats[indPl][21][0]) + tapRAux
-    matAux = int(statsPlayers[game][15])
+    matAux = int(statsPlayers[game][15][iPlayer])
     avStats[indPl][22][0] = int(avStats[indPl][22][0]) + matAux
-    fcomAux = int(statsPlayers[game][16])
+    fcomAux = int(statsPlayers[game][16][iPlayer])
     avStats[indPl][23][0] = int(avStats[indPl][23][0]) + fcomAux
-    frebAux = int(statsPlayers[game][17])
+    frebAux = int(statsPlayers[game][17][iPlayer])
     avStats[indPl][24][0] = int(avStats[indPl][24][0]) + frebAux
-    valAux = int(statsPlayers[game][18])
+    valAux = int(statsPlayers[game][18][iPlayer])
     avStats[indPl][25][0] = int(avStats[indPl][25][0]) + valAux
     avStats[indPl][1][0] = sType
 
@@ -201,7 +190,7 @@ def parse_stats_scratch_player(statsPlayers, game, indPl, sType, teamNames):
     lGames = []
     lGames.append(int(1))
     lMins = []
-    iMins = int(time2secs(statsPlayers[game][3][indPl]))
+    iMins = int(GALC.time2secs(statsPlayers[game][3][indPl]))
     lMins.append(iMins)
     lPts = []
     lPts.append(int(statsPlayers[game][4][indPl]))
@@ -210,19 +199,19 @@ def parse_stats_scratch_player(statsPlayers, game, indPl, sType, teamNames):
     lt2A = []
     lt2A.append(int(statsPlayers[game][5][indPl].split("/")[1].split(" ")[0]))
     lt2p = []
-    lt2p.append(round(float(statsPlayers[game][5][indPl].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt2p.append(int(statsPlayers[game][5][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lt3S = []
     lt3S.append(int(statsPlayers[game][6][indPl].split("/")[0]))
     lt3A = []
     lt3A.append(int(statsPlayers[game][6][indPl].split("/")[1].split(" ")[0]))
     lt3p = []
-    lt3p.append(round(float(statsPlayers[game][6][indPl].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt3p.append(int(statsPlayers[game][6][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lt1S = []
     lt1S.append(int(statsPlayers[game][7][indPl].split("/")[0]))
     lt1A = []
     lt1A.append(int(statsPlayers[game][7][indPl].split("/")[1].split(" ")[0]))
     lt1p = []
-    lt1p.append(round(float(statsPlayers[game][7][indPl].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
+    lt1p.append(int(statsPlayers[game][7][indPl].split("/")[1].split(" ")[1].split("%")[0]))
     lrOf = []
     lrOf.append(int(statsPlayers[game][8][indPl]))
     lrDef = []
@@ -288,7 +277,7 @@ def parse_stats_scratch_player(statsPlayers, game, indPl, sType, teamNames):
     lDERi.append(0)
     lNet = []
     lNet.append(0)
-    lTeam = teamNames[game + 1]
+    lTeam = teamNames[game+1]
 
     return [lNames, lTypes, lGames, lMins, lPts, lt2S, lt2A, lt2p, lt3S, lt3A, lt3p, lt1S, lt1A, lt1p, lrOf, lrDef, lrReb, lAssis, lRec, lPer, lTapF, lTapC, lMat, lFalC, lFalF, lVal, lAssisP, lEffp, lTShoot, lGScore, lScPoss, lnScPoss, lTotPoss, lFloorPer, lPpshot, lPerReb, lPerDefReb, lPerOfReb, lStPer, lTouches, lUsage, lVersatility, lWinScore, lOERi, lDERi, lNet, lTeam]
 
@@ -296,7 +285,7 @@ def parse_stats_existing_player(statsPlayers, game, indPl, avStats, iPlayer, sTy
     avStats[indPl][2][0] = (int(avStats[indPl][2][0])+1)
     # Minutes
     try:
-        iMins = time2secs(statsPlayers[game][3][iPlayer])
+        iMins = GALC.time2secs(statsPlayers[game][3][iPlayer])
         avStats[indPl][3][0] = avStats[indPl][3][0]+iMins
     except:
         pass
@@ -309,7 +298,7 @@ def parse_stats_existing_player(statsPlayers, game, indPl, avStats, iPlayer, sTy
     avStats[indPl][5][0] = int(avStats[indPl][5][0]) + it2M
     avStats[indPl][6][0] = int(avStats[indPl][6][0]) + it2A
     try:
-        avStats[indPl][7][0] = round(float(avStats[indPl][5][0]) / float(avStats[indPl][6][0]),2)
+        avStats[indPl][7][0] = float(avStats[indPl][5][0]) / float(avStats[indPl][6][0])
     except:
         avStats[indPl][7][0] = 0
     # lt3
@@ -318,7 +307,7 @@ def parse_stats_existing_player(statsPlayers, game, indPl, avStats, iPlayer, sTy
     avStats[indPl][8][0] = int(avStats[indPl][8][0]) + it3M
     avStats[indPl][9][0] = int(avStats[indPl][9][0]) + it3A
     try:
-        avStats[indPl][10][0] = round(float(avStats[indPl][8][0]) / float(avStats[indPl][9][0]),2)
+        avStats[indPl][10][0] = float(avStats[indPl][8][0]) / float(avStats[indPl][9][0])
     except:
         avStats[indPl][10][0] = 0
     # lt1
@@ -328,7 +317,7 @@ def parse_stats_existing_player(statsPlayers, game, indPl, avStats, iPlayer, sTy
     avStats[indPl][12][0] = int(avStats[indPl][12][0]) + it1A
 
     try:
-        avStats[indPl][13][0] = round(float(avStats[indPl][11][0]) / float(avStats[indPl][12][0]),2)
+        avStats[indPl][13][0] = float(avStats[indPl][11][0]) / float(avStats[indPl][12][0])
     except:
         avStats[indPl][13][0] = 0
 
@@ -364,14 +353,8 @@ def parse_stats_existing_player(statsPlayers, game, indPl, avStats, iPlayer, sTy
 def computeAdvStatsTeam(teamStats, oppFGA, oppPer, oppFTa, oppORB, teamFGa, teamPer, teamFTa, teamORB, teamPts, teamFGm, team3Pm, teamFTm, teamDRB, oppDRB, teamAssis, posTeam):
     oppPos = int(0.96 * (oppFGA + oppPer + 0.44 * oppFTa - oppORB))
     teamPoss = int(0.96 * (teamFGa + teamPer + 0.44 * teamFTa - teamORB))
-    try:
-        teamPace = float(teamPoss) / float(teamPoss+oppPos)
-    except:
-        pass
-    try:
-        teamOER = float(100 * teamPts) / float(teamPoss)
-    except:
-        pass
+    teamPace = float(teamPoss) / float(teamPoss+oppPos)
+    teamOER = float(100 * teamPts) / float(teamPoss)
     teamEffPer = 100 * ((teamFGm + 0.5 * team3Pm) / float(teamFGa))
     try:
         teamScoringP = float(teamFGm + (1 - (1 - (teamFTm / teamFTa)) ** 2) * teamFTa * 0.4)
@@ -384,16 +367,16 @@ def computeAdvStatsTeam(teamStats, oppFGA, oppPer, oppFTa, oppORB, teamFGa, team
     teamAssisR = 100 * (teamAssis / (teamFGa + 0.44 * teamFTa + teamAssis + teamPer))
     teamPerR = 100 * (teamPer) / (teamFGa+teamFTa*0.44+teamPer)
 
-    teamStats[posTeam][26][0] = round(teamPoss,2)
-    teamStats[posTeam][27][0] = round(teamPace,2)
-    teamStats[posTeam][28][0] = round(teamOER,2)
-    teamStats[posTeam][29][0] = round(teamEffPer,2)
-    teamStats[posTeam][30][0] = round(teamPlayPer,2)
-    teamStats[posTeam][31][0] = round(teamt1R,2)
-    teamStats[posTeam][32][0] = round(teamDefRebR,2)
-    teamStats[posTeam][33][0] = round(teamOfRebR,2)
-    teamStats[posTeam][34][0] = round(teamAssisR,2)
-    teamStats[posTeam][35][0] = round(teamPerR,2)
+    teamStats[posTeam][26][0] = teamPoss
+    teamStats[posTeam][27][0] = teamPace
+    teamStats[posTeam][28][0] = teamOER
+    teamStats[posTeam][29][0] = teamEffPer
+    teamStats[posTeam][30][0] = teamPlayPer
+    teamStats[posTeam][31][0] = teamt1R
+    teamStats[posTeam][32][0] = teamDefRebR
+    teamStats[posTeam][33][0] = teamOfRebR
+    teamStats[posTeam][34][0] = teamAssisR
+    teamStats[posTeam][35][0] = teamPerR
 
 def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=None, teamNames=None):
     totTeams = np.unique(teamNames)
@@ -435,33 +418,33 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
             try:
                 if teamNames[game+1] == targetTeam and targetTeam != 'Players':
                     gameVecPos.append(game+1)
-                    teamMinsv.append(float(statsPlayers[game + 1][3].replace('\n', '').replace(':', '.')))
-                    teamPtsv.append(float(statsPlayers[game + 1][4]))
-                    teamFGmv.append(int(statsPlayers[game + 1][5].split("/")[0]) + int(statsPlayers[game + 1][6].split("/")[0]))
-                    teamFGav.append(int(statsPlayers[game + 1][5].split("/")[1].split(" ")[0]) + int(statsPlayers[game + 1][6].split("/")[1].split(" ")[0]))
-                    teamFTmv.append(int(statsPlayers[game + 1][7].split("/")[0]))
-                    teamFTav.append(int(statsPlayers[game + 1][7].split("/")[1].split(" ")[0]))
-                    team3Pmv.append(int(statsPlayers[game + 1][6].split("/")[0]))
-                    teamAssisv.append(int(statsPlayers[game + 1][10]))
+                    teamMinsv.append(float(statsPlayers[game + 1][3][0].replace('\n', '').replace(':', '.')))
+                    teamPtsv.append(float(statsPlayers[game + 1][4][0]))
+                    teamFGmv.append(int(statsPlayers[game + 1][5][0].split("/")[0]) + int(statsPlayers[game + 1][6][0].split("/")[0]))
+                    teamFGav.append(int(statsPlayers[game + 1][5][0].split("/")[1].split(" ")[0]) + int(statsPlayers[game + 1][6][0].split("/")[1].split(" ")[0]))
+                    teamFTmv.append(int(statsPlayers[game + 1][7][0].split("/")[0]))
+                    teamFTav.append(int(statsPlayers[game + 1][7][0].split("/")[1].split(" ")[0]))
+                    team3Pmv.append(int(statsPlayers[game + 1][6][0].split("/")[0]))
+                    teamAssisv.append(int(statsPlayers[game + 1][10][0]))
 
-                    teamORBv.append(float(statsPlayers[game + 1][8]))
-                    teamDRBv.append(float(statsPlayers[game + 1][9]))
-                    teamRecv.append(float(statsPlayers[game + 1][11]))
-                    teamPerv.append(float(statsPlayers[game + 1][12]))
-                    teamTapv.append(float(statsPlayers[game + 1][13]))
-                    teamFpv.append(float(statsPlayers[game + 1][16]))
+                    teamORBv.append(float(statsPlayers[game + 1][8][0]))
+                    teamDRBv.append(float(statsPlayers[game + 1][9][0]))
+                    teamRecv.append(float(statsPlayers[game + 1][11][0]))
+                    teamPerv.append(float(statsPlayers[game + 1][12][0]))
+                    teamTapv.append(float(statsPlayers[game + 1][13][0]))
+                    teamFpv.append(float(statsPlayers[game + 1][16][0]))
 
-                    oppFGMv.append(float(statsPlayers[game + 2][5].split("/")[0]) + int(statsPlayers[game + 2][6].split("/")[0]))
-                    oppFGAv.append(float(statsPlayers[game + 2][5].split("/")[1].split(" ")[0]) + int(statsPlayers[game + 2][6].split("/")[1].split(" ")[0]))
-                    oppFTmv.append(int(statsPlayers[game + 2][7].split("/")[0]))
-                    oppFTav.append(int(statsPlayers[game + 2][7].split("/")[1].split(" ")[0]))
-                    opp3PMv.append(int(statsPlayers[game + 2][6].split("/")[0]))
-                    oppPointsv.append(float(statsPlayers[game + 2][4]))
-                    oppAssisv.append(int(statsPlayers[game + 2][10]))
-                    oppORBv.append(float(statsPlayers[game + 2][8]))
-                    oppDRBv.append(float(statsPlayers[game + 2][9]))
-                    oppPerv.append(float(statsPlayers[game + 2][12]))
-                    oppFpv.append(float(statsPlayers[game + 2][16]))
+                    oppFGMv.append(float(statsPlayers[game + 2][5][0].split("/")[0]) + int(statsPlayers[game + 2][6][0].split("/")[0]))
+                    oppFGAv.append(float(statsPlayers[game + 2][5][0].split("/")[1].split(" ")[0]) + int(statsPlayers[game + 2][6][0].split("/")[1].split(" ")[0]))
+                    oppFTmv.append(int(statsPlayers[game + 2][7][0].split("/")[0]))
+                    oppFTav.append(int(statsPlayers[game + 2][7][0].split("/")[1].split(" ")[0]))
+                    opp3PMv.append(int(statsPlayers[game + 2][6][0].split("/")[0]))
+                    oppPointsv.append(float(statsPlayers[game + 2][4][0]))
+                    oppAssisv.append(int(statsPlayers[game + 2][10][0]))
+                    oppORBv.append(float(statsPlayers[game + 2][8][0]))
+                    oppDRBv.append(float(statsPlayers[game + 2][9][0]))
+                    oppPerv.append(float(statsPlayers[game + 2][12][0]))
+                    oppFpv.append(float(statsPlayers[game + 2][16][0]))
                 game = game + 3
             except:
                 pass
@@ -495,10 +478,13 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                             posTeam = iTeamAux
                 else:
                     for iTeamAux in range(0, len(teamStatsM)):
-                        if str(teamStatsM[iTeamAux][0])[:-7] == str(targetTeam):
+                        if str(teamStatsM[iTeamAux][0])[:-5] == str(targetTeam):
                             posTeam = iTeamAux
 
-                computeAdvStatsTeam(teamStatsM, oppFGA, oppPer, oppFTa, oppORB, teamFGa, teamPer, teamFTa, teamORB, teamPts, teamFGm, team3Pm, teamFTm, teamDRB, oppDRB, teamAssis, posTeam)
+                try:
+                    computeAdvStatsTeam(teamStatsM, oppFGA, oppPer, oppFTa, oppORB, teamFGa, teamPer, teamFTa, teamORB, teamPts, teamFGm, team3Pm, teamFTm, teamDRB, oppDRB, teamAssis, posTeam)
+                except:
+                    pass
                 computeAdvStatsTeam(teamStatsAgM, teamFGa, teamPer, teamFTa, teamORB, oppFGA, oppPer, oppFTa, oppORB, oppPts, oppFGM, opp3PM, oppFTm, oppDRB, teamDRB, oppAssis, posTeam)
 
             for indPl in range(0, len(avStats)):
@@ -568,26 +554,26 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     oppPos = teamPoss
 
                     try:
-                        avStats[indPl][26][0] = round((100*float(iAssis)/(((float(iMins)/(float(teamMins)/float(5)))*teamFGm)-indFGm)),2)
+                        avStats[indPl][26][0] = (100*float(iAssis)/(((float(iMins)/(float(teamMins)/float(5)))*teamFGm)-indFGm))
                     except:
                         pass
 
                     # eFG
                     if indFGa != 0:
-                        avStats[indPl][27][0] = round((float(indFGm+0.5*(int(it3M)))/float(indFGa)),2)
+                        avStats[indPl][27][0] = (float(indFGm+0.5*(int(it3M)))/float(indFGa))
                     else:
                         avStats[indPl][27][0] = 0
 
                     # TS
                     if float(2*(float(indFGa)+0.44*float(it1A))) != 0:
-                        avStats[indPl][28][0] = round(float(iPts)/float(2*(float(indFGa)+0.44*float(it1A))),2)
+                        avStats[indPl][28][0] = float(iPts)/float(2*(float(indFGa)+0.44*float(it1A)))
                     else:
                         avStats[indPl][28][0] = 0
 
                     # Gscore
-                    avStats[indPl][29][0] = round(float(iPts)+0.4*float(indFGm)+0.7*float(iOfReb)+0.3*float(iDefReb)+float(iRec)+0.7*float(iAssis)+0.7*float(iTapF)-0.7*float(indFGa)-0.4*float(it1A-it1M)-0.4*float(iFal)-float(iPer),2)
+                    avStats[indPl][29][0] = float(iPts)+0.4*float(indFGm)+0.7*float(iOfReb)+0.3*float(iDefReb)+float(iRec)+0.7*float(iAssis)+0.7*float(iTapF)-0.7*float(indFGa)-0.4*float(it1A-it1M)-0.4*float(iFal)-float(iPer)
 
-                    # qAst = ((float(iMins)/float(teamMins/5)) * (1.14 * (float(teamAssis-iAssis)/float(teamFGm)))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
+
                     try:
                         qAst = ((float(iMins)/float(teamMins/5)) * (float(teamAssis-iAssis)/float(teamFGm-indFGm))) + ((((teamAssis / teamMins) * iMins * 5 - iAssis) / ((teamFGm / teamMins) * iMins * 5 - indFGm)) * (1 - (iMins / (teamMins / 5))))
                     except:
@@ -598,11 +584,7 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     except:
                         FG_Part = 0
 
-                    try:
-                        AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
-                    except:
-                        pass
-
+                    AST_Part = 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
                     try:
                         FT_Part = (1 - (1 - (it1M / it1A)) ** 2) * 0.4 * it1A
                     except:
@@ -619,84 +601,84 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
 
                     nscPoss = FGxPoss + FTxPoss + iPer
 
-                    # Free Throw Rate
-                    try:
-                        avStats[indPl][30][0] = round(100*(it1M/indFGa),2)
-                    except:
-                        avStats[indPl][30][0] = 0
-
                     # Scored Poss
-                    avStats[indPl][31][0] = round(scPoss,2)
+                    avStats[indPl][30][0] = scPoss
 
                     # Non Scored Poss
-                    avStats[indPl][32][0] = round(nscPoss,2)
+                    avStats[indPl][31][0] = nscPoss
+
+                    # Tot Poss
+                    avStats[indPl][32][0] = int(scPoss+nscPoss)
 
                     # Floor Percentage
                     try:
-                        avStats[indPl][33][0] = round((float(100)*(float(scPoss)/float(nscPoss+scPoss))),2)
+                        avStats[indPl][33][0] = avStats[indPl][33][0] + (float(100)*(float(scPoss)/float(nscPoss+scPoss)))
                     except:
                         pass
 
                     # Points per Shot
                     if float(it2A+it3A) != 0:
                         fPointspshot = float(2*it2M+3*it3M)/float(it2A+it3A)
-                        avStats[indPl][34][0] = round(fPointspshot,2)
+                        avStats[indPl][34][0] = fPointspshot
 
                     # % Reb
                     teamAgRebs = oppDRB+oppORB
                     teamRebs = teamDRB+teamORB
-                    if iMins > 0:
+                    try:
                         fPerReb = 100*float((iOfReb+iDefReb)*(float(teamMins)/float(5)))/float(float(iMins)*(teamRebs+teamAgRebs))
-                        fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
-                        fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
-                    else:
+                    except:
                         fPerReb = 0
-                        fPerDefReb = 0
-                        fPerOfReb = 0
+                    try:
+                        fPerDefReb = 100 * (float(iDefReb * float(teamMins) / float(5)) / float(float(iMins) * (teamDRB + oppORB)))
+                    except:
+                        fPerReb = 0
+                    try:
+                        fPerOfReb = 100 * (float(iOfReb * float(teamMins) / float(5)) / float(float(iMins) * (teamORB + oppDRB)))
+                    except:
+                        fPerReb = 0
 
-                    avStats[indPl][35][0] = round(fPerReb,2)
-                    avStats[indPl][36][0] = round(fPerDefReb,2)
-                    avStats[indPl][37][0] = round(fPerOfReb,2)
+                    avStats[indPl][35][0] = fPerReb
+                    avStats[indPl][36][0] = fPerDefReb
+                    avStats[indPl][37][0] = fPerOfReb
 
                     # % Steals
-                    if iMins > 0:
+                    try:
                         fStPer = float(100)*(float(float(iRec)*(float(teamMins)/float(5)))/float(iMins*oppPos))
-                    else:
+                    except:
                         fStPer = 0
-                    avStats[indPl][38][0] = round(fStPer,2)
+                    avStats[indPl][38][0] = fStPer
 
                     # Touches
-                    fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
-                    avStats[indPl][39][0] = round(fTouches,2)
+                    try:
+                        fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
+                    except:
+                        fTouches = indFGa + iPer + (iAssis/float(0.17))
+                    avStats[indPl][39][0] = + fTouches
 
                     fUsage1 = (float(indFGa)+0.44*it1A+iPer)*float(teamMins)
-                    fUsage2 = (float(teamFGa) + 0.44*teamFTa + teamPer) * float(5) * float(iMins)
+                    fUsage2 = (float(teamFGm) + 0.44*teamFTa + teamPer) * float(5) * float(iMins)
 
                     if fUsage2 != 0:
                         fUsage = 100*(fUsage1)/(fUsage2)
-                        avStats[indPl][40][0] = round(fUsage,2)
+                        avStats[indPl][40][0] = fUsage
 
                     # Versatility
-                    avStats[indPl][41][0] = round((iPts*float(iOfReb+iDefReb)*iAssis)**(0.333),2)
+                    avStats[indPl][41][0] = (iPts*float(iOfReb+iDefReb)*iAssis)**(0.333)
 
                     # Win Scores
                     fWinScore = iPts + iDefReb + iOfReb + iRec + 0.5*iAssis + 0.5*iTapF - indFGa - iPer - 0.5*it1A - 0.5*iFal
-                    avStats[indPl][42][0] = round(fWinScore,2)
+                    avStats[indPl][42][0] = fWinScore
 
                     try:
                         pPointsProd_FG_Part = 2*(indFGm + 0.5*it3M) * (1 - 0.5*(float(iPts-it1M)/float(2*indFGa)) * qAst)
                     except:
                         pPointsProd_FG_Part = 0
-
-                    try:
-                        pPointsProd_AST_Part = 2 * ((teamFGm - indFGm + 0.5 * (team3Pm - it3M)) / (teamFGm - indFGm)) * 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
-                    except:
-                        pPointsProd_AST_Part = 0
-
+                    pPointsProd_AST_Part = 2 * ((teamFGm - indFGm + 0.5 * (team3Pm - it3M)) / (teamFGm - indFGm)) * 0.5 * (((teamPts - teamFTm) - (iPts - it1M)) / (2 * (teamFGa - indFGa))) * iAssis
                     try:
                         pPointsProd_ORB_Part = iOfReb * teamORBw * teamPlayp * (teamPts / (teamFGm + (1 - (1 - (teamFTm / teamFTa))** 2) *0.4 * teamFTa))
                     except:
-                        pPointsProd_ORB_Part = 0
+                        pPointsProd_ORB_Part = iOfReb * teamORBw * teamPlayp * (teamPts / teamFGm)
+                        #pass
 
                     pProd = (pPointsProd_FG_Part + pPointsProd_AST_Part + it1M) * (1 - (teamORB / teamScoringP) * teamORBw * teamPlayp) + pPointsProd_ORB_Part
                     try:
@@ -711,21 +693,27 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     DORp = float(oppORB) / (float(oppORB) + float(teamDRB))
                     FMwt = (DFGp * (1 - DORp)) / (DFGp * (1 - DORp) + (1 - DFGp) * DORp)
                     Stops1 = iRec + iTapF * FMwt * (1 - 1.07 * DORp) + iDefReb * (1 - FMwt)
-                    Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
+                    try:
+                        Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
+                    except:
+                        Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins
                     Stops = Stops1 + Stops2
-                    if iMins > 0:
+                    try:
                         Stopp = (Stops * teamMins) / (teamPoss * iMins)
-                    else:
+                    except:
                         Stopp = 0
                     DERating = 100 * (oppPoints / teamPoss)
-                    DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
+                    try:
+                        DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
+                    except:
+                        DpScore = oppPoints / oppFGM
+
                     DERi = DERating + 0.2 * (100 * DpScore * (1 - Stopp) - DERating)
 
-                    avStats[indPl][43][0] = round(OERi,2)
-                    avStats[indPl][44][0] = round(DERi,2)
+                    avStats[indPl][43][0] = OERi
+                    avStats[indPl][44][0] = DERi
                     lNeti = float(OERi - DERi)
-                    avStats[indPl][45][0] = round(lNeti,2)
-
+                    avStats[indPl][45][0] = lNeti
 
 def parseGameData(iGame, players, stats, sType, statsPlayers, bTeam, teamNames, sLang):
     try:
@@ -748,28 +736,28 @@ def parseGameData(iGame, players, stats, sType, statsPlayers, bTeam, teamNames, 
     else:
         try:
             playersGame = game[0]
-            if playersGame[-4:] == 'inst' or playersGame[-4:] == 'ival':
+            if playersGame[0][-4:] == 'inst' or playersGame[0][-4:] == 'ival':
                 iGameSt = iGame-1
             else:
                 iGameSt = iGame
-
-            if str(teamNames[iGameSt])+ ' ' + playersGame not in players:
-                players.append(str(teamNames[iGameSt])+ ' ' + playersGame)
-                statsGame = parse_stats_scratch_team(statsPlayers, iGame, 0, sType, teamNames)
-                statsGame[0] = str(teamNames[iGameSt])+ ' ' + playersGame
-                stats.append(statsGame)
-            else:
-                index = players.index(str(teamNames[iGameSt])+ ' ' + playersGame)
-                parse_stats_existing_team(statsPlayers, iGame, index, stats, 0, sType)
+            for iPlayer in range(0, len(playersGame)):
+                if str(teamNames[iGameSt])+ ' ' + playersGame[0] not in players:
+                    players.append(str(teamNames[iGameSt])+ ' ' + playersGame[0])
+                    statsGame = parse_stats_scratch_team(statsPlayers, iGame, iPlayer, sType, teamNames)
+                    statsGame[0] = str(teamNames[iGameSt])+ ' ' + playersGame[0]
+                    stats.append(statsGame)
+                else:
+                    index = players.index(str(teamNames[iGameSt])+ ' ' + playersGame[0])
+                    parse_stats_existing_team(statsPlayers, iGame, index, stats, iPlayer, sType)
         except:
             pass
 
 
 def stats2csvLeague(avStats,csvFile, sLang):
     if sLang == 'Castellano':
-        headers = ['Nombre', 'Equipo', 'Partidos', 'Minutos', 'Puntos', 'T2 Anotados', 'T2 Lanzados', '% T2', 'T3 Anotados', 'T3 Lanzados', '% T3', 'T1 Anotados', 'T1 Lanzados', '% T1', 'Reb. Ofensivos', 'Reb. Defensivos', 'Rebotes', 'Asistencias', 'Robos', 'Perdidas', 'Tapones', 'Tapones Recibidos', 'Mates', 'Faltas Cometidas', 'Faltas Recibidas', 'Valoracion', '% Asist', '% Tiro Efectivo', '% Tiro Verdadero', 'GScore', 'TLR%', 'Posesiones Anotadas', 'Posesiones No Anotadas', 'Floor Percentage', 'Puntos por Tiro', '% Rebotes', '% Rebotes Def', '% Rebotes Of', '% Robos', 'Toques', 'Uso', 'Versatilidad', 'Win Scores', 'Eficiencia Ofensiva', 'Eficiencia Defensiva', 'Diferencia eficiencia']
+        headers = ['Nombre', 'Equipo', 'Partidos', 'Minutos', 'Puntos', 'T2 Anotados', 'T2 Lanzados', '% T2', 'T3 Anotados', 'T3 Lanzados', '% T3', 'T1 Anotados', 'T1 Lanzados', '% T1', 'Reb. Ofensivos', 'Reb. Defensivos', 'Rebotes', 'Asistencias', 'Robos', 'Perdidas', 'Tapones', 'Tapones Recibidos', 'Mates', 'Faltas Cometidas', 'Faltas Recibidas', 'Valoracion', '% Asist', '% Tiro Efectivo', '% Tiro Verdadero', 'GScore', 'Posesiones Anotadas', 'Posesiones No Anotadas', 'Tot Posesiones', 'Floor Percentage', 'Puntos por Tiro', '% Rebotes', '% Rebotes Def', '% Rebotes Of', '% Robos', 'Toques', 'Uso', 'Versatilidad', 'Win Scores', 'Eficiencia Ofensiva', 'Eficiencia Defensiva', 'Diferencia eficiencia']
     else:
-        headers = ['Name', 'Team', 'Games', 'Minutes', 'Points', '2PM', '2PA', '% 2P', '3PM', '3Pa', '% 3P', 'FTM', 'FTA', '% T1', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'TOV', 'BLK', 'BLKr', 'Dunks', 'PF', 'PFr', 'PIR', 'AST%', 'eFG%', 'TS%', 'GScore', 'FTR', 'Scored Poss.', 'Non-scored Poss.', 'Floor Percentage', 'PPS', 'TRB%', 'DRB%', 'ORB%', 'STL%', 'Touches', 'Usage', 'Versatility', 'Win Scores', 'OER', 'DER', 'Net']
+        headers = ['Name', 'Team', 'Games', 'Minutes', 'Points', '2PM', '2PA', '% 2P', '3PM', '3Pa', '% 3P', 'FTM', 'FTA', '% T1', 'OREB', 'DREB', 'REB', 'AST', 'STL', 'TOV', 'BLK', 'BLKr', 'Dunks', 'PF', 'PFr', 'PIR', 'AST%', 'eFG%', 'TS%', 'GScore', 'Scored Poss.', 'Non-scored Poss.', 'Tot Poss.', 'Floor Percentage', 'PPS', 'TRB%', 'DRB%', 'ORB%', 'STL%', 'Touches', 'Usage', 'Versatility', 'Win Scores', 'OER', 'DER', 'Net']
 
     avStats = np.array(avStats)
     avStats[:,1] = avStats[:,46]
@@ -817,7 +805,6 @@ def stats2csvFaseTeam(avStatsT,avStatsAg,csvFile, bAddition, sLang):
         iFac = 5
     else:
         iFac = 0
-
     for iStat in range(2,int(len(headers)-iFac)):
         substBrackets(df,headers[iStat])
 
@@ -826,9 +813,9 @@ def stats2csvFaseTeam(avStatsT,avStatsAg,csvFile, bAddition, sLang):
 
 def ranking2csv(topStats, csvFile, sLang):
     if sLang == 'Castellano':
-        headers = ['Minutos (jugador)', 'Minutos (valor)', 'Puntos (jugador)', 'Puntos (valor)', 'T2 Anotados (jugador)', 'T2 Anotados (valor)', 'T2 Lanzados (jugador)', 'T2 Lanzados (valor)', '% T2 (jugador)', '% T2 (valor)', 'T3 Anotados (jugador)', 'T3 Anotados (valor)', 'T3 Lanzados (jugador)', 'T3 Lanzados (valor)', '% T3 (jugador)', '% T3 (valor)', 'T1 Anotados (jugador)','T1 Anotados (valor)', 'T1 Lanzados (jugador)','T1 Lanzados (valor)', '% T1 (jugador)','% T1 (valor)', 'Reb. Ofensivos (jugador)', 'Reb. Ofensivos (valor)', 'Reb. Defensivos (jugador)', 'Reb. Defensivos (valor)', 'Rebotes (jugador)', 'Rebotes (valor)', 'Asistencias (jugador)', 'Asistencias (valor)', 'Robos (jugador)', 'Robos (valor)', 'Perdidas (jugador)', 'Perdidas (valor)', 'Tapones (jugador)', 'Tapones (valor)', 'Tapones Recibidos (jugador)', 'Tapones Recibidos (valor)', 'Mates (jugador)', 'Mates (valor)', 'Faltas Cometidas (jugador)', 'Faltas Cometidas (valor)', 'Faltas Recibidas (jugador)', 'Faltas Recibidas (valor)', 'Valoracion (jugador)', 'Valoracion (valor)',  '% Asist (jugador)', '% Asist (valor)', '% Tiro Efectivo (jugador)', '% Tiro Efectivo (valor)', '% Tiro Verdadero (jugador)', '% True Shooting (valor)', 'GScore (jugador)', 'GScore (valor)', 'TLR% (jugador)',  'TLR% (valor)', 'Posesiones Anotadas (jugador)', 'Posesiones Anotadas (valor)', 'Posesiones No Anotadas (jugador)', 'Posesiones No Anotadas (valor)', 'Floor Percentage (jugador)', 'Floor Percentage (valor)', 'Puntos por Tiro (jugador)', 'Puntos por Tiro (valor)',  '% Rebotes (jugador)', '% Rebotes (valor)', '% Rebotes Def (jugador)', '% Rebotes Def (valor)',  '% Rebotes Of (jugador)', '% Rebotes Of (valor)',  '% Robos (jugador)', '% Robos (valor)',  'Toques (jugador)', 'Toques (valor)',  'Uso (jugador)', 'Uso (valor)', 'Versatilidad (jugador)', 'Versatilidad (valor)', 'Win Scores (jugador)',  'Win Scores (valor)', 'Eficiencia Ofensiva (jugador)', 'Eficiencia Ofensiva (valor)', 'Eficiencia Defensiva (jugador)', 'Eficiencia Defensiva (valor)', 'Diferencia Eficiencia (jugador)', 'Diferencia Eficiencia (valor)']
+        headers = ['Minutos (jugador)', 'Minutos (valor)', 'Puntos (jugador)', 'Puntos (valor)', 'T2 Anotados (jugador)', 'T2 Anotados (valor)', 'T2 Lanzados (jugador)', 'T2 Lanzados (valor)', '% T2 (jugador)', '% T2 (valor)', 'T3 Anotados (jugador)', 'T3 Anotados (valor)', 'T3 Lanzados (jugador)', 'T3 Lanzados (valor)', '% T3 (jugador)', '% T3 (valor)', 'T1 Anotados (jugador)','T1 Anotados (valor)', 'T1 Lanzados (jugador)','T1 Lanzados (valor)', '% T1 (jugador)','% T1 (valor)', 'Reb. Ofensivos (jugador)', 'Reb. Ofensivos (valor)', 'Reb. Defensivos (jugador)', 'Reb. Defensivos (valor)', 'Rebotes (jugador)', 'Rebotes (valor)', 'Asistencias (jugador)', 'Asistencias (valor)', 'Robos (jugador)', 'Robos (valor)', 'Perdidas (jugador)', 'Perdidas (valor)', 'Tapones (jugador)', 'Tapones (valor)', 'Tapones Recibidos (jugador)', 'Tapones Recibidos (valor)', 'Mates (jugador)', 'Mates (valor)', 'Faltas Cometidas (jugador)', 'Faltas Cometidas (valor)', 'Faltas Recibidas (jugador)', 'Faltas Recibidas (valor)', 'Valoracion (jugador)', 'Valoracion (valor)',  '% Asist (jugador)', '% Asist (valor)', '% Tiro Efectivo (jugador)', '% Tiro Efectivo (valor)', '% Tiro Verdadero (jugador)', '% True Shooting (valor)', 'GScore (jugador)', 'GScore (valor)', 'Posesiones Anotadas (jugador)', 'Posesiones Anotadas (valor)', 'Posesiones No Anotadas (jugador)', 'Posesiones No Anotadas (valor)', 'Tot Posesiones (jugador)',  'Tot Posesiones (valor)', 'Floor Percentage (jugador)', 'Floor Percentage (valor)', 'Puntos por Tiro (jugador)', 'Puntos por Tiro (valor)',  '% Rebotes (jugador)', '% Rebotes (valor)', '% Rebotes Def (jugador)', '% Rebotes Def (valor)',  '% Rebotes Of (jugador)', '% Rebotes Of (valor)',  '% Robos (jugador)', '% Robos (valor)',  'Toques (jugador)', 'Toques (valor)',  'Uso (jugador)', 'Uso (valor)', 'Versatilidad (jugador)', 'Versatilidad (valor)', 'Win Scores (jugador)',  'Win Scores (valor)', 'Eficiencia Ofensiva (jugador)', 'Eficiencia Ofensiva (valor)', 'Eficiencia Defensiva (jugador)', 'Eficiencia Defensiva (valor)', 'Diferencia Eficiencia (jugador)', 'Diferencia Eficiencia (valor)']
     else:
-        headers = ['Minutes (player)', 'Minutes (value)', 'Points (player)', 'Points (value)', '2PM (player)', '2PM (value)', '2PA (player)', '2PA (value)', '% 2P (player)', '% 2P (value)', '3PM (player)', '3PM (value)', '3PA (player)', '3PA (value)', '% 3P (player)', '% 3P (value)', 'FTM (player)','FTM (value)', 'FTA (player)','FTA (value)', '% FT (player)','% FT (value)', 'ORB (player)', 'ORB (value)', 'DRB (player)', 'DRB (value)', 'REB (player)', 'REB (value)', 'ASS (player)', 'ASS (value)', 'STL (player)', 'STL (value)', 'TOV (player)', 'TOV (value)', 'BLK (player)', 'BLK (value)', 'BLKr (player)', 'BLKr (value)', 'Dunks (player)', 'Dunks (value)', 'PF (player)', 'PF (value)', 'PFr (player)', 'PFr (value)', 'PIR (player)', 'PIR (value)',  'ASS% (player)', 'ASS% (value)', 'eFG% (player)', 'eFG% (value)', 'TS% (player)', 'TS% (value)', 'GScore (player)', 'GScore (value)', 'FTR% (player)',  'FTR% (value)', 'Scored Poss. (player)', 'Scored Poss. (value)', 'Non-scored Poss. (player)', 'Non-scored Poss. (value)', 'Floor Percentage (player)', 'Floor Percentage (value)', 'PPS (player)', 'PPS (value)',  'REB% (player)', 'REB% (value)', 'DRB% (player)', 'DRB% (value)',  'ORB% (player)', 'ORB% (value)',  'STL% (player)', 'STL% (value)',  'Touches (player)', 'Touches (value)',  'Usage (player)', 'Usage (value)', 'Versatility (player)', 'Versatility (value)', 'Win Scores (player)',  'Win Scores (value)', 'OER (player)', 'OER (value)', 'DER (player)', 'DER (value)', 'Net (player)', 'Net (value)']
+        headers = ['Minutes (player)', 'Minutes (value)', 'Points (player)', 'Points (value)', '2PM (player)', '2PM (value)', '2PA (player)', '2PA (value)', '% 2P (player)', '% 2P (value)', '3PM (player)', '3PM (value)', '3PA (player)', '3PA (value)', '% 3P (player)', '% 3P (value)', 'FTM (player)','FTM (value)', 'FTA (player)','FTA (value)', '% FT (player)','% FT (value)', 'ORB (player)', 'ORB (value)', 'DRB (player)', 'DRB (value)', 'REB (player)', 'REB (value)', 'ASS (player)', 'ASS (value)', 'STL (player)', 'STL (value)', 'TOV (player)', 'TOV (value)', 'BLK (player)', 'BLK (value)', 'BLKr (player)', 'BLKr (value)', 'Dunks (player)', 'Dunks (value)', 'PF (player)', 'PF (value)', 'PFr (player)', 'PFr (value)', 'PIR (player)', 'PIR (value)',  'ASS% (player)', 'ASS% (value)', 'eFG% (player)', 'eFG% (value)', 'TS% (player)', 'TS% (value)', 'GScore (player)', 'GScore (value)', 'Scored Poss. (player)', 'Scored Poss. (value)', 'Non-scored Poss. (player)', 'Non-scored Poss. (value)', 'Tot. Possessions (player)',  'Tot. Possessions (value)', 'Floor Percentage (player)', 'Floor Percentage (value)', 'PPS (player)', 'PPS (value)',  'REB% (player)', 'REB% (value)', 'DRB% (player)', 'DRB% (value)',  'ORB% (player)', 'ORB% (value)',  'STL% (player)', 'STL% (value)',  'Touches (player)', 'Touches (value)',  'Usage (player)', 'Usage (value)', 'Versatility (player)', 'Versatility (value)', 'Win Scores (player)',  'Win Scores (value)', 'OER (player)', 'OER (value)', 'DER (player)', 'DER (value)', 'Net (player)', 'Net (value)']
 
     df = DataFrame(np.transpose(topStats), columns=headers)
     df.to_csv(csvFile, index=False)
@@ -836,6 +823,13 @@ def ranking2csv(topStats, csvFile, sLang):
 def get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, iFase, targetTeam, sFase, bTeam, bProj, sLocal=None, sAway=None, sWin=None, sDif=None, teamNames=None, sLang=None, tPlayers=None):
 
     iTotFases = int(float(len(statsPlayers)/3))
+
+    # if statsPlayers[0][0] == []:
+    #     statsPlayersB = []
+    #     for iJ in range(0, len(statsPlayers)):
+    #         if statsPlayers[iJ][0] != []:
+    #             statsPlayersB.append(statsPlayers[iJ])
+    #     statsPlayers = statsPlayersB
 
     strPlayersTot = []
     avStatsTot = []
@@ -856,8 +850,12 @@ def get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, iFase, targetT
         sRound = 'Round '
         sRoundF = 'Rounds'
 
+    tPlayers = None
     for indFase in range(0,iTotFases):
-        jornada = np.int(float(indFase) / len(totTeams)) + jorFirst
+        if tPlayers != None:
+            jornada = np.int(float(iGame) / float((tPlayers) * 3)) + 1
+        else:
+            jornada = np.int(float(iGame)/float(len(totTeams)*3))+1
         strPlayers = []
         avStats = []
         strPlayersT = []
@@ -1050,9 +1048,8 @@ def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, str
 
     avStatsArr = np.copy(np.array(avStats))
     if bOnlyTeam == False:
-        stats2csvLeague(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + 'Av.csv', sLang)
-        stats2csvFaseTeam(teamStats, teamStatsAg, sDir + '/t'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + 'Av.csv', False, sLang)
-    # stats2(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
+        stats2csvLeague(avStats, sDir + '/p'+targetTeam+season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', sLang)
+        stats2csvFaseTeam(teamStats, teamStatsAg,  sDir + '/t' + targetTeam + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + strFase + '.csv', False, sLang)
     else:
         np.save(sDir + '/' + targetTeam + strFase + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + '.npy', teamStats)
         np.save(sDir + '/' + targetTeam + strFase + season + 'J' + str(jorFirst) + 'J' + str(jorLast) + 'Against.npy', teamStatsAg)
@@ -1062,8 +1059,7 @@ def getAvStatsLeague(statsPlayers,targetTeam,season, jorFirst, jorLast,sDir, str
         if platform == 'Linux' or platform == 'Darwin':
             namesArr = np.array([str(x)[5:-4] for x in namesArr])
         else:
-            namesArr = np.array([str(str(x[0])) for x in namesArr])
-
+            namesArr = np.array([str(str(x[0][1:-1])) for x in namesArr])
         gamesArr = np.array(avStatsArr[:, 2])
         gamesArr = np.array([int(x[0]) for x in gamesArr])
 
