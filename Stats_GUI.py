@@ -76,7 +76,7 @@ class Application(Frame):
         #self.SeasonLabel = Label(self, text="2. Temporada:").grid(row=2, column=0, sticky=W)
         self.text_season = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_season.grid(row=2, column=1, columnspan=1, sticky=W)
-        self.text_season.insert(END, "2019")
+        self.text_season.insert(END, "2018")
         # self.text_season.configure(state="disabled")
 
 
@@ -93,7 +93,7 @@ class Application(Frame):
 
         self.text_jLast = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_jLast.grid(row=5, column=1, columnspan=1, sticky=W)
-        self.text_jLast.insert(END, "7")
+        self.text_jLast.insert(END, "34")
         # self.text_jLast.configure(state="disabled")
 
     def create_target_widget(self):
@@ -103,7 +103,7 @@ class Application(Frame):
         #self.LabelTeam.grid(row=1, column=0, sticky=W)
         self.text_team = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_team.grid(row=1, column=1, columnspan=1, sticky=W)
-        self.text_team.insert(END, "Liga")
+        self.text_team.insert(END, "Araberri")
         # self.text_team.configure(state="disabled")
 
     def create_against1_widget(self):
@@ -389,7 +389,10 @@ class Application(Frame):
             groupSplit = division.split(',')[1]
         except:
             pass
-        if division == 'ORO':
+
+        if division == 'ENDESA' or division == 'LF':
+            division = 'DIA'
+        if division == 'ORO' or division.split(',')[0] == 'ORO':
             groupFeb = '1'
         elif division == 'DIA':
             groupFeb = '4'
@@ -413,24 +416,58 @@ class Application(Frame):
                 else:
                     groupFeb = '2'
         elif divSplit == 'EBA':
-            if groupSplit[0] == 'A':
-                groupFeb = '3'
-            elif groupSplit[0] == 'B':
-                groupFeb = '5'
-            elif groupSplit[0] == 'C':
+            if groupSplit[0] == 'A': # AA AB AC
+                if int(season) > 2019:
+                    if groupSplit[1] == 'A':
+                        groupFeb = '3'
+                    else:
+                        groupFeb = '17'
+                else:
+                    groupFeb = '3'
+            elif groupSplit[0] == 'B': # BA BBA
+                if int(season) > 2019:
+                    if groupSplit[1] == 'A':
+                        groupFeb = '5'
+                    else:
+                        groupFeb = '57'
+                else:
+                    groupFeb = '5'
+            elif groupSplit[0] == 'C': # C1 C2 C3
                 if int(season) > 2018:
                     if groupSplit[1] == 'A':
                         groupFeb = '6'
-                    elif groupSplit[1] == 'B':
+                    elif groupSplit[1] == 'B' or groupSplit[1] == '2':
+                        groupFeb = '46'
+                    elif groupSplit[1] == 'C' or groupSplit[1] == '3':
                         groupFeb = '46'
                 else:
                     groupFeb = '6'
-            elif groupSplit[0] == 'D':
-                groupFeb = '7'
-            elif groupSplit[0] == 'E':
-                groupFeb = '8'
-        elif divSplit == 'LF2':
-            groupFeb = '9'
+            elif groupSplit[0] == 'D': # DA DB
+                if int(season) > 2019:
+                    if groupSplit[1] == 'A':
+                        groupFeb = '7'
+                    else:
+                        groupFeb = '47'
+                else:
+                    groupFeb = '7'
+            elif groupSplit[0] == 'E': # EA EB
+                if int(season) > 2019:
+                    if groupSplit[1] == 'A':
+                        groupFeb = '8'
+                    else:
+                        groupFeb = '39'
+                else:
+                    groupFeb = '8'
+        elif divSplit == 'LF2': # A B C
+            if int(season) > 2019:
+                if groupSplit == 'A':
+                    groupFeb = '9'
+                elif groupSplit == 'B':
+                    groupFeb = '10'
+                elif groupSplit == 'C':
+                    groupFeb = '56'
+            else:
+                groupFeb = '9'
 
         sLang = self.language.get()
 
@@ -457,17 +494,16 @@ class Application(Frame):
             sMinGames = str(unicodedata.normalize('NFKD', self.text_minPartidos.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '')
 
         if targetTeam == 'Liga' or targetTeam == 'LIGA':
-            if division == 'ORO' or division == 'DIA' or division == 'ENDESA':
+            if division == 'ORO' or division == 'DIA' or division == 'ENDESA' or division == 'LF':
                 GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division, sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
+            elif divSplit == 'ORO':
+                GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
             elif divSplit == 'PLATA':
                 if bUnaFase == False:
                     GetAllLeagueBothPlata.extractStatisticsPlataAll(html_doc,targetTeam,season,jorFirst,jorLast,division.split(',')[1],division.split(',')[2],sDir,self.text_chrome,bTeam,sPlayers,bProj,division,'',sMinGames, sLang, False)
                     reload(GetAllLeagueBothPlata)
                 else:
-                    try:
-                        GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang, False)
-                    except:
-                        GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division, sDir, self.text_chrome, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang, False)
+                    GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, '', 'Fase1', sMinGames, sLang, False)
             elif divSplit == 'EBA':
                 GetAllLeagueCommon.extractStatisticsAllLeague(html_doc, 'Liga'+division.replace(',','-'), season, jorFirst, jorLast, division.split(',')[1], sDir, self.text_chrome, bTeam, sPlayers, bProj, division, '', sMinGames, sLang, False)
             elif divSplit == 'LF2':
@@ -478,8 +514,10 @@ class Application(Frame):
             for k in range(0, len(targetTeams)):
                 if sDir[-1] == '/':
                     sDir = sDir[:-1]
-                if division == 'ORO' or division == 'DIA':
+                if division == 'ORO' or division == 'DIA' or division == 'ENDESA' or division == 'LF':
                     GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division, sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                elif divSplit == 'ORO':
+                    GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division, division.split(',')[1], sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
                 elif divSplit == 'PLATA':
                     if bUnaFase == False:
                         GetAllLeagueBothPlata.extractStatisticsPlata(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], division.split(',')[2], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
