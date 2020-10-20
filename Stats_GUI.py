@@ -517,7 +517,7 @@ class Application(Frame):
                 if division == 'ORO' or division == 'DIA' or division == 'ENDESA' or division == 'LF':
                     GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division, sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
                 elif divSplit == 'ORO':
-                    GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division, division.split(',')[1], sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
+                    GetAllGamesCommon.extractStatistics(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
                 elif divSplit == 'PLATA':
                     if bUnaFase == False:
                         GetAllLeagueBothPlata.extractStatisticsPlata(html_doc, targetTeams[k], againstTeams1, againstTeams2, season, jorFirst, jorLast, division.split(',')[1], division.split(',')[2], sDir, sPeriodos, self.text_chrome, bAll, bTeam, sPlayers, bProj, division, '', sMinGames, sLang)
