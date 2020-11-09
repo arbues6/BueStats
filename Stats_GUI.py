@@ -433,7 +433,18 @@ class Application(Frame):
                 else:
                     groupFeb = '5'
             elif groupSplit[0] == 'C': # C1 C2 C3
-                if int(season) > 2018:
+                if int(season) > 2019:
+                    if groupSplit[1] == '1':
+                        groupFeb = '48'
+                    elif groupSplit[1] == '2':
+                        groupFeb = '49'
+                    elif groupSplit[1] == '3':
+                        groupFeb = '59'
+                    elif groupSplit[1] == '4':
+                        groupFeb = '59'
+                    elif groupSplit[1] == '5':
+                        groupFeb = '59'
+                elif int(season) > 2018:
                     if groupSplit[1] == 'A':
                         groupFeb = '6'
                     elif groupSplit[1] == 'B' or groupSplit[1] == '2':
