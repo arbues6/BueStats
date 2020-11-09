@@ -551,7 +551,6 @@ def parse_stats_scratch_team(statsPlayers, game, indPl, sType, bAgainst):
     lt1A.append(int(statsPlayers[game][7].split("/")[1].split(" ")[0]))
     lt1p = []
     lt1p.append(round(float(statsPlayers[game][7].split("/")[1].split(" ")[1].split("%")[0].replace(',','.'))/100,2))
-    lt3S = []
     lrOf = []
     lrOf.append(int(statsPlayers[game][8]))
     lrDef = []
