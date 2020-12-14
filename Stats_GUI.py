@@ -76,7 +76,7 @@ class Application(Frame):
         #self.SeasonLabel = Label(self, text="2. Temporada:").grid(row=2, column=0, sticky=W)
         self.text_season = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_season.grid(row=2, column=1, columnspan=1, sticky=W)
-        self.text_season.insert(END, "2018")
+        self.text_season.insert(END, "2020")
         # self.text_season.configure(state="disabled")
 
 
@@ -103,7 +103,7 @@ class Application(Frame):
         #self.LabelTeam.grid(row=1, column=0, sticky=W)
         self.text_team = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_team.grid(row=1, column=1, columnspan=1, sticky=W)
-        self.text_team.insert(END, "Araberri")
+        self.text_team.insert(END, "JOVENTUT")
         # self.text_team.configure(state="disabled")
 
     def create_against1_widget(self):
@@ -127,7 +127,7 @@ class Application(Frame):
         self.divisionLabel.grid(row=3, column=0, sticky=W)
         self.text_division = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_division.grid(row=3, column=1, columnspan=1, sticky=W)
-        self.text_division.insert(END, "Oro")
+        self.text_division.insert(END, "EBA,C5")
         # self.text_division.configure(state="disabled")
 
     def create_periodos_widget(self):
@@ -441,9 +441,9 @@ class Application(Frame):
                     elif groupSplit[1] == '3':
                         groupFeb = '59'
                     elif groupSplit[1] == '4':
-                        groupFeb = '59'
+                        groupFeb = '60'
                     elif groupSplit[1] == '5':
-                        groupFeb = '59'
+                        groupFeb = '61'
                 elif int(season) > 2018:
                     if groupSplit[1] == 'A':
                         groupFeb = '6'

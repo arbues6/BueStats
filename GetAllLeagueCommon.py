@@ -63,21 +63,6 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                 if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
                     iSelect = listPhase
 
-        if sLeague == 'EBA,C4' or sLeague == 'EBA,C5':
-            html_doc = 'https://baloncestoenvivo.feb.es/calendario/ligaeba/3/2020'
-            driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-            driver.get(html_doc)
-            # select = Select(driver.find_element_by_id('gruposDropDownList'))
-            select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
-            if system == 'Linux' or system == 'Darwin':
-                for listPhase in range(0, len(select.options)):
-                    if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
-                        iSelect = listPhase
-            else:
-                for listPhase in range(0, len(select.options)):
-                    if str(division.encode('ascii', 'ignore')).upper()[2:-1] in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-', '')[2:-1].split(' '):
-                        iSelect = listPhase
-
         select.select_by_visible_text(select.options[iSelect].text)
         # time.sleep(5)
         to_soup = driver.page_source
