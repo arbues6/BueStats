@@ -1,6 +1,6 @@
 bs4==0.0.1
 selenium==3.141.0
-lxml==4.4.2
+lxml==4.6.2
 numpy==1.18.1
 pandas==0.25.3
 requests==2.22.0
