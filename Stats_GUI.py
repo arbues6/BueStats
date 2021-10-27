@@ -76,7 +76,7 @@ class Application(Frame):
         #self.SeasonLabel = Label(self, text="2. Temporada:").grid(row=2, column=0, sticky=W)
         self.text_season = Text(self, width=53, height=1, wrap=WORD, relief=RIDGE, borderwidth=2)
         self.text_season.grid(row=2, column=1, columnspan=1, sticky=W)
-        self.text_season.insert(END, "2020")
+        self.text_season.insert(END, "2021")
         # self.text_season.configure(state="disabled")
 
 
@@ -426,10 +426,13 @@ class Application(Frame):
                     groupFeb = '3'
             elif groupSplit[0] == 'B': # BA BBA
                 if int(season) > 2019:
-                    if groupSplit[1] == 'A':
-                        groupFeb = '5'
+                    if int(season) < 2021:
+                        if groupSplit[1] == 'A':
+                            groupFeb = '5'
+                        else:
+                            groupFeb = '57'
                     else:
-                        groupFeb = '57'
+                        groupFeb = '5'
                 else:
                     groupFeb = '5'
             elif groupSplit[0] == 'C': # C1 C2 C3
@@ -465,8 +468,10 @@ class Application(Frame):
                 if int(season) > 2019:
                     if groupSplit[1] == 'A':
                         groupFeb = '8'
-                    else:
+                    elif groupSplit[1] == 'B':
                         groupFeb = '39'
+                    elif groupSplit[1] == 'C':
+                        groupFeb = '53'
                 else:
                     groupFeb = '8'
         elif divSplit == 'LF2': # A B C
