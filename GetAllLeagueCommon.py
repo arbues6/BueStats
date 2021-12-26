@@ -20,9 +20,11 @@ sWin = []
 sDif = []
 
 def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,division,sDir,sChrome,bTeam,sPlayers,bProj,sLeague,sOutput,sMinGames, sLang, bOnlyTeam):
+    html_doc_alt1 = html_doc
+    html_doc_alt2 = html_doc
 
-    html_doc_alt1 = html_doc + "&med=0"
-    html_doc_alt2 = html_doc + "&med=1"
+    #html_doc_alt1 = html_doc + "&med=0"
+    #html_doc_alt2 = html_doc + "&med=1"
     req = requests.get(html_doc)
     soup = BeautifulSoup(req.text, 'lxml')
 
@@ -47,7 +49,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
     # maximized window
     chrome_options.add_argument("--start-maximized")
 
-    if sLeague != 'ORO' and sLeague != 'DIA':
+    if sLeague != 'ORO' and sLeague != 'DIA' and sLeague != 'LFCHALLENGE':
         if sLeague[:3] == 'ORO':
             division = sLeague[4:]
         driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
@@ -70,30 +72,30 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
         soup = BeautifulSoup(to_soup, 'lxml')
         jornadas = soup.find_all('table')
 
-        if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-            driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-            driver.get(html_doc_alt1)
-            select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
-            select.select_by_visible_text(select.options[iSelect].text)
-            # time.sleep(5)
-            to_soup = driver.page_source
-            driver.close()
-            soup = BeautifulSoup(to_soup, 'lxml')
-            jornadas = soup.find_all('div', class_="contentTablaDataGrid")
-            try:
-                if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
-                    driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
-                    driver.get(html_doc_alt2)
-                    select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
-                    select.select_by_visible_text(select.options[iSelect].text)
-                    # time.sleep(5)
-                    to_soup = driver.page_source
-                    driver.close()
-                    soup = BeautifulSoup(to_soup, 'lxml')
-                    jornadas = soup.find_all('div', class_="contentTablaDataGrid")
-            except:
-                pass
-        jornadas = soup.find_all('table')
+        # if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
+        #     driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
+        #     driver.get(html_doc_alt1)
+        #     select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
+        #     select.select_by_visible_text(select.options[iSelect].text)
+        #     # time.sleep(5)
+        #     to_soup = driver.page_source
+        #     driver.close()
+        #     soup = BeautifulSoup(to_soup, 'lxml')
+        #     jornadas = soup.find_all('div', class_="contentTablaDataGrid")
+        #     try:
+        #         if jornadas[0].text.split('/')[0] == firstJornada and iSelect != 0:
+        #             driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
+        #             driver.get(html_doc_alt2)
+        #             select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
+        #             select.select_by_visible_text(select.options[iSelect].text)
+        #             # time.sleep(5)
+        #             to_soup = driver.page_source
+        #             driver.close()
+        #             soup = BeautifulSoup(to_soup, 'lxml')
+        #             jornadas = soup.find_all('div', class_="contentTablaDataGrid")
+        #     except:
+        #         pass
+        # jornadas = soup.find_all('table')
 
     resLoc = []
     resVis = []
@@ -124,8 +126,9 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             for k in range(0, len(gamesJorn), 3):
                 itOdd += 1
 
-                gameCode = gamesJorn[k+1].find_all('a')[0]['href']
-                realLink = "http://competiciones.feb.es/Estadisticas/" + gameCode
+                gameCode = gamesJorn[k+1].find_all('a')[0]['href'].split('?p=')[-1]
+                #realLink = "http://competiciones.feb.es/Estadisticas/" + gameCode
+                realLink = "https://baloncestoenvivo.feb.es/partido/" + gameCode
                 a, b = GetStatsGame.getStats(realLink)
 
                 locTeam = str(unicodedata.normalize('NFKD', gamesJorn[k].text.split('\n')[1]).encode('ascii', 'ignore'))[iBenIn:iEndIn]
@@ -142,7 +145,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                         a1 = GC.filterPlayers(a, sPlayers)
                     else:
                         a1 = a
-                    if a1 != []:
+                    if a1[0] != []:
                         a1p = [list(x) for x in list(np.array(a1)[:, :-1])]
                         statsPlayers.append(a1p)
                         teamStats = list(np.array(a1)[:, -1])
@@ -172,7 +175,7 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                         b1 = GC.filterPlayers(b, sPlayers)
                     else:
                         b1 = b
-                    if b1 != []:
+                    if b1[0] != []:
                         b1p = [list(x) for x in list(np.array(b1)[:, :-1])]
                         teamStats = list(np.array(b1)[:, -1])
                         teamStatsAgainst = list(np.array(a)[:, -1])

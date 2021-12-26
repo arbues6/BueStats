@@ -391,12 +391,16 @@ class Application(Frame):
             pass
 
         if division == 'ENDESA' or division == 'LF':
+            html_name = 'lfendesa'
             division = 'DIA'
         if division == 'ORO' or division.split(',')[0] == 'ORO':
+            html_name = 'ligaleboro'
             groupFeb = '1'
         elif division == 'DIA':
+            html_name = 'lfendesa'
             groupFeb = '4'
         elif divSplit == 'PLATA':
+            html_name = 'ligalebplata'
             bUnaFase = False
             if len(division.split(',')) == 3:
                 if int(season) > 2017:
@@ -416,6 +420,7 @@ class Application(Frame):
                 else:
                     groupFeb = '2'
         elif divSplit == 'EBA':
+            html_name = 'ligaeba'
             if groupSplit[0] == 'A': # AA AB AC
                 if int(season) > 2019:
                     if groupSplit[1] == 'A':
@@ -487,7 +492,7 @@ class Application(Frame):
 
         sLang = self.language.get()
 
-        html_doc = "http://competiciones.feb.es/Estadisticas/Calendario.aspx?g=" + groupFeb + "&t=" + season + "&"
+        html_doc = "https://baloncestoenvivo.feb.es/calendario/" + html_name + '/' + groupFeb + '/' + season
         if iEndIn != 0:
             targetTeam = str(unicodedata.normalize('NFKD', self.text_team.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '').upper()[iBenIn:iEndIn]
             againstTeams1 = str(unicodedata.normalize('NFKD', self.text_equiposTop.get("1.0", END)).encode('ascii', 'ignore')).replace('\n', '')[iBenIn:iEndIn].split(',')
