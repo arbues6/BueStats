@@ -666,7 +666,10 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     avStats[indPl][38][0] = round(fStPer,2)
 
                     # Touches
-                    fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
+                    if (teamFTa > 0 and oppFp > 0):
+                        fTouches = indFGa + iPer + (iAssis/float(0.17)) + (it1A / (teamFTa / oppFp))
+                    else:
+                        fTouches = 0
                     avStats[indPl][39][0] = round(fTouches,2)
 
                     fUsage1 = (float(indFGa)+0.44*it1A+iPer)*float(teamMins)
@@ -711,14 +714,20 @@ def computeAdvStatsLeague(statsPlayers, avStats, teamStatsM=None, teamStatsAgM=N
                     DORp = float(oppORB) / (float(oppORB) + float(teamDRB))
                     FMwt = (DFGp * (1 - DORp)) / (DFGp * (1 - DORp) + (1 - DFGp) * DORp)
                     Stops1 = iRec + iTapF * FMwt * (1 - 1.07 * DORp) + iDefReb * (1 - FMwt)
-                    Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
+                    if (oppFTa > 0 and teamFp > 0):
+                        Stops2 = (((oppFGA - oppFGM - teamTap) / teamMins) * FMwt * (1 - 1.07 * DORp) + ((oppPer - teamRec) / teamMins)) * iMins + (iFal / teamFp) * 0.4 * oppFTa * ((1 - (oppFTm / oppFTa))**2)
+                    else:
+                        Stops2 = 0
                     Stops = Stops1 + Stops2
                     if iMins > 0:
                         Stopp = (Stops * teamMins) / (teamPoss * iMins)
                     else:
                         Stopp = 0
                     DERating = 100 * (oppPoints / teamPoss)
-                    DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
+                    if oppFTa > 0:
+                        DpScore = oppPoints / (oppFGM + (1 - (1 - (oppFTm / oppFTa)) ** 2) * oppFTa * 0.4)
+                    else:
+                        DpScore = 0
                     DERi = DERating + 0.2 * (100 * DpScore * (1 - Stopp) - DERating)
 
                     avStats[indPl][43][0] = round(OERi,2)
@@ -884,7 +893,10 @@ def get5FasesStats(statsPlayers, season, jorFirst, jorLast, sDir, iFase, targetT
         avStatsTotAg.append(avStatsAg)
 
         if sLocal != None:
-            avStatsTotT[indFase][0].append(sLocal[indFase])
+            try:
+                avStatsTotT[indFase][0].append(sLocal[indFase])
+            except:
+                pass
             avStatsTotT[indFase][0].append(sAway[indFase])
             avStatsTotT[indFase][0].append(sWin[indFase])
             avStatsTotT[indFase][0].append(sDif[indFase])

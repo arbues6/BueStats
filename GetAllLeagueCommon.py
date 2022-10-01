@@ -54,7 +54,15 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
             division = sLeague[4:]
         driver = webdriver.Chrome(sChrome, chrome_options=chrome_options)
         driver.get(html_doc)
-        # select = Select(driver.find_element_by_id('gruposDropDownList'))
+        ## if chromedriver doesn't seem to change from the main site, uncomment the following block (avoid FEB roadblocks)
+        # select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_temporadasDropDownList'))
+        # if system == 'Linux' or system == 'Darwin':
+        #     for listPhase in range(0, len(select.options)):
+        #         if str("2021/2022") in str(select.options[listPhase].text.encode('ascii', 'ignore')).upper().replace('"', '').replace('-','')[2:-1].split(' '):
+        #             iSelect = listPhase
+        # select.select_by_visible_text(select.options[iSelect].text)
+        #to_soup = driver.page_source
+
         select = Select(driver.find_element_by_id('_ctl0_MainContentPlaceHolderMaster_gruposDropDownList'))
         if system == 'Linux' or system == 'Darwin':
             for listPhase in range(0, len(select.options)):
@@ -138,14 +146,20 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                     resLocIn = int(gamesJorn[k + 1].text.split('\n')[1].split('-')[0])
                     resVisIn = int(gamesJorn[k + 1].text.split('\n')[1].split('-')[1])
 
-                    resLoc.append(resLocIn)
-                    resVis.append(resVisIn)
-
                     if len(sPlayers) > 0 and sPlayers[0] != '':
                         a1 = GC.filterPlayers(a, sPlayers)
                     else:
                         a1 = a
-                    if a1[0] != []:
+
+                    if len(sPlayers) > 0 and sPlayers[0] != '':
+                        b1 = GC.filterPlayers(b, sPlayers)
+                    else:
+                        b1 = b
+
+                    if (a1[0] != [] and b1[0] != []):
+                        resLoc.append(resLocIn)
+                        resVis.append(resVisIn)
+
                         a1p = [list(x) for x in list(np.array(a1)[:, :-1])]
                         statsPlayers.append(a1p)
                         teamStats = list(np.array(a1)[:, -1])
@@ -171,11 +185,6 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                             sWin.append(False)
                         sDif.append(difa)
 
-                    if len(sPlayers) > 0 and sPlayers[0] != '':
-                        b1 = GC.filterPlayers(b, sPlayers)
-                    else:
-                        b1 = b
-                    if b1[0] != []:
                         b1p = [list(x) for x in list(np.array(b1)[:, :-1])]
                         teamStats = list(np.array(b1)[:, -1])
                         teamStatsAgainst = list(np.array(a)[:, -1])
@@ -199,6 +208,8 @@ def extractStatisticsAllLeague(html_doc,targetTeam,season,jorFirst,jorLast,divis
                         else:
                             sWin.append(False)
                         sDif.append(difa)
+                    else:
+                        a = 1
                 except:
                     pass
 
