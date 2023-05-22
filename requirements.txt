@@ -3,4 +3,4 @@ selenium==3.141.0
 lxml==4.6.5
 numpy==1.18.1
 pandas==0.25.3
-requests==2.22.0
+requests==2.31.0
